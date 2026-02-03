@@ -30,13 +30,13 @@
             overflow-x: hidden; 
         }
 
-        /* --- BOTÃO FLUTUANTE (CANTO ESQUERDO) --- */
+        /* --- BOTÃO FLUTUANTE (SUPORTE) --- */
         .social-floating { position: fixed; top: 15px; left: 15px; z-index: 9999; }
         .btn-float { width: 40px; height: 40px; border-radius: 50%; background: rgba(0, 0, 0, 0.6); border: 1px solid var(--amarelo); display: flex; align-items: center; justify-content: center; color: #fff; text-decoration: none; backdrop-filter: blur(5px); transition: 0.3s; }
         .btn-float:hover { transform: scale(1.1); background: var(--amarelo); color: #000; }
         .btn-float svg { width: 20px; height: 20px; fill: currentColor; }
 
-        /* --- CABEÇALHO (HERO) --- */
+        /* --- CABEÇALHO --- */
         header { position: relative; height: 520px; display: flex; align-items: center; justify-content: center; border-bottom: 2px solid var(--amarelo); overflow: hidden; }
         .hero-bg-slider { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; }
         .bg-slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; opacity: 0; animation: slideShow 18s ease-in-out infinite; transform: scale(1.1); }
@@ -167,7 +167,7 @@
                     <h3 class="barber-name">Richard</h3>
                 </div>
                 <div class="container-calendly">
-                    <div class="calendly-inline-widget" data-url="https://calendly.com/juniorrichard703/agenda?hide_gdpr_banner=1&background_color=000000&text_color=ffffff&primary_color=ffd700" style="min-width:320px;height:700px;"></div>
+                    <div class="calendly-inline-widget" data-url="https://calendly.com/juniorrichard703/agenda?hide_gdpr_banner=1&background_color=000000&text_color=ffffff&primary_color=ffd700&utm_source=richard" style="min-width:320px;height:700px;"></div>
                 </div>
             </div>
 
@@ -179,7 +179,7 @@
                     <h3 class="barber-name">Walisson</h3>
                 </div>
                 <div class="container-calendly">
-                    <div class="calendly-inline-widget" data-url="https://calendly.com/walissonrodrigo545/agenda?hide_gdpr_banner=1&background_color=000000&text_color=ffffff&primary_color=ffd700" style="min-width:320px;height:700px;"></div>
+                    <div class="calendly-inline-widget" data-url="https://calendly.com/walissonrodrigo545/agenda?hide_gdpr_banner=1&background_color=000000&text_color=ffffff&primary_color=ffd700&utm_source=walisson" style="min-width:320px;height:700px;"></div>
                 </div>
             </div>
         </div>
@@ -188,9 +188,8 @@
     <footer>MANO A MANO • ESTILO • RESPEITO • TRADIÇÃO • 2026</footer>
 
     <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
-
     <script>
-        // Lógica do Carrossel de Preços
+        // Carrossel
         function moveSlider(index) {
             const track = document.getElementById('sliderTrack');
             const dots = document.querySelectorAll('.dot');
@@ -199,45 +198,38 @@
             if(dots[index]) dots[index].classList.add('active');
         }
 
-        // --- LÓGICA BLINDADA DO WHATSAPP ---
+        // --- LÓGICA DO WHATSAPP COM ETIQUETAS ---
         window.addEventListener('message', function(e) {
             if (e.data.event && e.data.event === 'calendly.event_scheduled') {
                 
-                // 1. Elementos da tela
+                // 1. Troca visual
                 const allWidgets = document.getElementById('allWidgets');
                 const successContainer = document.getElementById('successContainer');
                 const btnZap = document.getElementById('whatsappBtn');
+                
+                if(allWidgets) allWidgets.style.display = 'none';
+                if(successContainer) successContainer.style.display = 'block';
 
-                // 2. Troca visual (Esconde agendas, mostra sucesso)
-                if (allWidgets) allWidgets.style.display = 'none';
-                if (successContainer) successContainer.style.display = 'block';
-
-                // 3. SEGURANÇA: Define o link do RICHARD como padrão IMEDIATAMENTE.
-                // Assim, o botão nunca fica vazio, mesmo se o código abaixo falhar.
+                // 2. Define PADRÃO (Richard)
                 let zapNumero = "5535984422957"; 
                 let zapMsg = "Oi Richard! Agendei pelo site e quero confirmar meu horário!";
 
-                // 4. Tenta descobrir se é o Walisson de forma infalível
+                // 3. Verifica se veio a etiqueta "walisson" no agendamento
                 try {
-                    // Transforma tudo que veio do Calendly em texto e procura a palavra "walisson"
-                    const dadosTexto = JSON.stringify(e.data);
+                    // O Calendly devolve as UTMs dentro do objeto data
+                    const dadosCompletos = JSON.stringify(e.data);
                     
-                    if (dadosTexto.toLowerCase().includes('walisson')) {
-                        zapNumero = "5535984273273"; 
+                    if (dadosCompletos.toLowerCase().includes('walisson')) {
+                        zapNumero = "5535984273273"; // Número do Walisson
                         zapMsg = "Oi Walisson! Agendei pelo site e quero confirmar meu horário!";
                     }
                 } catch (erro) {
-                    // Se der erro na verificação, não faz nada (mantém o Richard)
-                    console.log("Mantendo padrão Richard por segurança.");
+                    console.log("Erro na verificação, mantendo padrão.");
                 }
 
-                // 5. Aplica o link final no botão
+                // 4. Monta o link
                 if (btnZap) {
-                    const linkFinal = "https://wa.me/" + zapNumero + "?text=" + encodeURIComponent(zapMsg);
-                    btnZap.href = linkFinal;
-                    
-                    // Tenta abrir automático (se o navegador deixar)
-                    // window.open(linkFinal, '_blank'); 
+                    btnZap.href = "https://wa.me/" + zapNumero + "?text=" + encodeURIComponent(zapMsg);
                 }
             }
         });
