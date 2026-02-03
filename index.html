@@ -167,7 +167,7 @@
                     <h3 class="barber-name">Richard</h3>
                 </div>
                 <div class="container-calendly">
-                    <div class="calendly-inline-widget" data-url="https://calendly.com/juniorrichard703/agenda?hide_gdpr_banner=1&background_color=000000&text_color=ffffff&primary_color=ffd700&utm_source=richard" style="min-width:320px;height:700px;"></div>
+                    <div class="calendly-inline-widget" data-url="https://calendly.com/juniorrichard703/agenda?hide_gdpr_banner=1&background_color=000000&text_color=ffffff&primary_color=ffd700" style="min-width:320px;height:700px;"></div>
                 </div>
             </div>
 
@@ -179,7 +179,7 @@
                     <h3 class="barber-name">Walisson</h3>
                 </div>
                 <div class="container-calendly">
-                    <div class="calendly-inline-widget" data-url="https://calendly.com/walissonrodrigo545/agenda?hide_gdpr_banner=1&background_color=000000&text_color=ffffff&primary_color=ffd700&utm_source=walisson" style="min-width:320px;height:700px;"></div>
+                    <div class="calendly-inline-widget" data-url="https://calendly.com/walissonrodrigo545/agenda?hide_gdpr_banner=1&background_color=000000&text_color=ffffff&primary_color=ffd700" style="min-width:320px;height:700px;"></div>
                 </div>
             </div>
         </div>
@@ -189,7 +189,7 @@
 
     <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
     <script>
-        // Carrossel
+        // Função do Carrossel de Preços
         function moveSlider(index) {
             const track = document.getElementById('sliderTrack');
             const dots = document.querySelectorAll('.dot');
@@ -198,38 +198,48 @@
             if(dots[index]) dots[index].classList.add('active');
         }
 
-        // --- LÓGICA DO WHATSAPP COM ETIQUETAS ---
+        // --- LÓGICA DO WHATSAPP "DETETIVE" ---
         window.addEventListener('message', function(e) {
             if (e.data.event && e.data.event === 'calendly.event_scheduled') {
                 
-                // 1. Troca visual
+                // 1. Troca visual (some agenda, aparece botão)
                 const allWidgets = document.getElementById('allWidgets');
                 const successContainer = document.getElementById('successContainer');
                 const btnZap = document.getElementById('whatsappBtn');
-                
-                if(allWidgets) allWidgets.style.display = 'none';
-                if(successContainer) successContainer.style.display = 'block';
 
-                // 2. Define PADRÃO (Richard)
+                if (allWidgets) allWidgets.style.display = 'none';
+                if (successContainer) successContainer.style.display = 'block';
+
+                // 2. Define o Padrão (Richard)
                 let zapNumero = "5535984422957"; 
                 let zapMsg = "Oi Richard! Agendei pelo site e quero confirmar meu horário!";
 
-                // 3. Verifica se veio a etiqueta "walisson" no agendamento
-                try {
-                    // O Calendly devolve as UTMs dentro do objeto data
-                    const dadosCompletos = JSON.stringify(e.data);
-                    
-                    if (dadosCompletos.toLowerCase().includes('walisson')) {
-                        zapNumero = "5535984273273"; // Número do Walisson
-                        zapMsg = "Oi Walisson! Agendei pelo site e quero confirmar meu horário!";
+                // 3. DETETIVE: Descobre qual iframe mandou o aviso
+                // Vamos varrer todos os iframes da página
+                const iframes = document.getElementsByTagName('iframe');
+                
+                for (let i = 0; i < iframes.length; i++) {
+                    // Se o iframe atual for o mesmo que enviou a mensagem (e.source)
+                    if (iframes[i].contentWindow === e.source) {
+                        
+                        // Pergunta: "Esse iframe mora na casa do Walisson?"
+                        if (iframes[i].closest('#walisson')) {
+                            console.log("Agendamento identificado: WALISSON");
+                            zapNumero = "5535984273273"; // Número do Walisson
+                            zapMsg = "Oi Walisson! Agendei pelo site e quero confirmar meu horário!";
+                        } else {
+                            console.log("Agendamento identificado: RICHARD");
+                        }
+                        break; // Já achou, pode parar de procurar
                     }
-                } catch (erro) {
-                    console.log("Erro na verificação, mantendo padrão.");
                 }
 
-                // 4. Monta o link
+                // 4. Aplica o link correto
                 if (btnZap) {
                     btnZap.href = "https://wa.me/" + zapNumero + "?text=" + encodeURIComponent(zapMsg);
+                    
+                    // (Opcional) Tenta abrir automático se o navegador deixar
+                    // window.open(btnZap.href, '_blank');
                 }
             }
         });
