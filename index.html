@@ -30,7 +30,7 @@
             overflow-x: hidden; 
         }
 
-        /* --- BOTÕES FLUTUANTES --- */
+        /* --- BOTÃO FLUTUANTE (CANTO ESQUERDO) --- */
         .social-floating { position: fixed; top: 15px; left: 15px; z-index: 9999; }
         .btn-float { width: 40px; height: 40px; border-radius: 50%; background: rgba(0, 0, 0, 0.6); border: 1px solid var(--amarelo); display: flex; align-items: center; justify-content: center; color: #fff; text-decoration: none; backdrop-filter: blur(5px); transition: 0.3s; }
         .btn-float:hover { transform: scale(1.1); background: var(--amarelo); color: #000; }
@@ -194,36 +194,51 @@
         function moveSlider(index) {
             const track = document.getElementById('sliderTrack');
             const dots = document.querySelectorAll('.dot');
-            track.style.transform = `translateX(-${index * 50}%)`;
+            if(track) track.style.transform = `translateX(-${index * 50}%)`;
             dots.forEach(dot => dot.classList.remove('active'));
-            dots[index].classList.add('active');
+            if(dots[index]) dots[index].classList.add('active');
         }
 
-        // Lógica Inteligente de Agendamento e WhatsApp
+        // --- LÓGICA BLINDADA DO WHATSAPP ---
         window.addEventListener('message', function(e) {
             if (e.data.event && e.data.event === 'calendly.event_scheduled') {
                 
-                // 1. Troca as telas
-                document.getElementById('allWidgets').style.display = 'none';
-                document.getElementById('successContainer').style.display = 'block';
-                
-                // 2. Identifica o Barbeiro
-                const eventUrl = e.data.payload.event_type.url;
-                let num = "5535984422957"; // Padrão: Richard
-                let msg = "Oi Richard! Acabei de agendar meu horário pelo site e gostaria de confirmar!";
+                // 1. Elementos da tela
+                const allWidgets = document.getElementById('allWidgets');
+                const successContainer = document.getElementById('successContainer');
+                const btnZap = document.getElementById('whatsappBtn');
 
-                // Checa se o link do Calendly é o do Walisson
-                if (eventUrl.toLowerCase().includes('walisson')) {
-                    num = "5535984273273"; 
-                    msg = "Oi Walisson! Acabei de agendar meu horário pelo site e gostaria de confirmar!";
+                // 2. Troca visual (Esconde agendas, mostra sucesso)
+                if (allWidgets) allWidgets.style.display = 'none';
+                if (successContainer) successContainer.style.display = 'block';
+
+                // 3. SEGURANÇA: Define o link do RICHARD como padrão IMEDIATAMENTE.
+                // Assim, o botão nunca fica vazio, mesmo se o código abaixo falhar.
+                let zapNumero = "5535984422957"; 
+                let zapMsg = "Oi Richard! Agendei pelo site e quero confirmar meu horário!";
+
+                // 4. Tenta descobrir se é o Walisson de forma infalível
+                try {
+                    // Transforma tudo que veio do Calendly em texto e procura a palavra "walisson"
+                    const dadosTexto = JSON.stringify(e.data);
+                    
+                    if (dadosTexto.toLowerCase().includes('walisson')) {
+                        zapNumero = "5535984273273"; 
+                        zapMsg = "Oi Walisson! Agendei pelo site e quero confirmar meu horário!";
+                    }
+                } catch (erro) {
+                    // Se der erro na verificação, não faz nada (mantém o Richard)
+                    console.log("Mantendo padrão Richard por segurança.");
                 }
 
-                // 3. Injeta o link no botão final (formato oficial wa.me)
-                const finalLink = "https://wa.me/" + num + "?text=" + encodeURIComponent(msg);
-                document.getElementById('whatsappBtn').href = finalLink;
-
-                // 4. Tenta abrir automático (funciona em alguns celulares com HTTPS)
-                window.open(finalLink, '_blank');
+                // 5. Aplica o link final no botão
+                if (btnZap) {
+                    const linkFinal = "https://wa.me/" + zapNumero + "?text=" + encodeURIComponent(zapMsg);
+                    btnZap.href = linkFinal;
+                    
+                    // Tenta abrir automático (se o navegador deixar)
+                    // window.open(linkFinal, '_blank'); 
+                }
             }
         });
     </script>
