@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Club Mano a Mano - Premium</title>
+    
+    <style>
+        :root {
+            --preto-fundo: #0a0a0a;
+            --cartao-fundo: #161616;
+            --dourado: #FFD700; /* Ouro */
+            --dourado-escuro: #B8860B;
+            --branco: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--preto-fundo);
+            color: var(--branco);
+            text-align: center;
+        }
+
+        header {
+            padding: 40px 20px;
+            background: radial-gradient(circle, #222 0%, #000 100%);
+            border-bottom: 2px solid var(--dourado);
+        }
+
+        .logo-img { max-width: 200px; margin-bottom: 20px; }
+
+        h1 {
+            color: var(--dourado);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 2.5rem;
+            margin: 0;
+        }
+
+        h2 { font-weight: 300; color: #ccc; margin-top: 10px; font-size: 1.2rem; }
+
+        /* --- Caixa de Benefícios --- */
+        .container-premium {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .card-beneficios {
+            background-color: var(--cartao-fundo);
+            border: 1px solid #333;
+            border-radius: 15px;
+            padding: 40px 20px;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.1); /* Brilho dourado fraco */
+        }
+
+        .titulo-card {
+            font-size: 1.8rem;
+            color: var(--branco);
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            border-bottom: 1px solid #333;
+            padding-bottom: 20px;
+            display: inline-block;
+        }
+
+        .lista-vantagens {
+            list-style: none;
+            padding: 0;
+            text-align: left;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .lista-vantagens li {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .icone {
+            font-size: 1.5rem;
+            margin-right: 15px;
+            color: var(--dourado);
+        }
+
+        /* --- Botão de Assinatura --- */
+        .btn-assinar {
+            background: linear-gradient(45deg, var(--dourado), var(--dourado-escuro));
+            color: #000;
+            font-weight: 900;
+            text-transform: uppercase;
+            padding: 20px 50px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 1.3rem;
+            display: inline-block;
+            margin-top: 30px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 5px 20px rgba(255, 215, 0, 0.4);
+        }
+
+        .btn-assinar:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.6);
+            color: #fff;
+        }
+
+        /* --- Disclaimer (Aviso) --- */
+        .aviso-construcao {
+            margin-top: 50px;
+            padding: 15px;
+            border: 1px dashed var(--dourado);
+            border-radius: 8px;
+            background-color: rgba(255, 215, 0, 0.05);
+            font-size: 0.9rem;
+            color: #ddd;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn-voltar {
+            display: block;
+            margin-top: 40px;
+            color: #777;
+            text-decoration: none;
+            margin-bottom: 40px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <img src="logo.png" alt="Logo" class="logo-img">
+        <h1>Club Mano a Mano</h1>
+        <h2>A exclusividade que você merece.</h2>
+    </header>
+
+    <div class="container-premium">
+        
+        <div class="card-beneficios">
+            <h3 class="titulo-card">💎 Cliente Premium</h3>
+            
+            <ul class="lista-vantagens">
+                <li>
+                    <span class="icone">📅</span>
+                    <span><strong>Horário Fixo:</strong> Sua cadeira garantida toda semana, sem fila.</span>
+                </li>
+                <li>
+                    <span class="icone">🔄</span>
+                    <span><strong>Preferência:</strong> Prioridade total em reagendamentos de emergência.</span>
+                </li>
+                <li>
+                    <span class="icone">💲</span>
+                    <span><strong>Valores Especiais:</strong> Desconto na assinatura mensal.</span>
+                </li>
+                <li>
+                    <span class="icone">🎟️</span>
+                    <span><strong>Sorteios:</strong> Participe de promoções exclusivas do Club.</span>
+                </li>
+            </ul>
+
+            <a href="COLE_O_LINK_DA_ASSINATURA_AQUI" class="btn-assinar" target="_blank">
+                Quero ser Premium
+            </a>
+
+            <div class="aviso-construcao">
+                <strong>⚠️ PÁGINA EM CONSTRUÇÃO</strong><br>
+                Estamos finalizando os detalhes do Clube! <br>
+                Ao clicar em assinar, você entrará para a nossa lista de fundadores (Beta).
+            </div>
+
+        </div>
+
+    </div>
+
+    <a href="index.html" class="btn-voltar">← Voltar para o Site</a>
+
+</body>
+</html>
