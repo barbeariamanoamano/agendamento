@@ -50,11 +50,31 @@
         @keyframes slideShow { 0% { opacity: 0; transform: scale(1.1); } 10% { opacity: 1; } 33% { opacity: 1; } 43% { opacity: 0; transform: scale(1); } 100% { opacity: 0; } }
 
         .header-content { position: relative; z-index: 2; text-align: center; max-width: 800px; padding: 20px; }
-        .logo-placeholder { font-family: var(--font-display); font-size: 3rem; color: var(--amarelo); font-weight: 900; margin-bottom: 30px; letter-spacing: -1px; }
         
-        /* Título ajustado (Menor) */
-        .hero-title { font-size: 3rem; font-weight: 900; line-height: 1; margin-bottom: 40px; letter-spacing: -1px; }
+        /* LOGO */
+        .logo-img { max-width: 300px; margin-bottom: 20px; width: 100%; height: auto; }
+
+        .hero-title { font-size: 3rem; font-weight: 900; line-height: 1; margin-bottom: 20px; letter-spacing: -1px; }
         @media (max-width: 768px) { .hero-title { font-size: 2rem; } }
+
+        /* WIDGET DE TEMPO */
+        .weather-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0,0,0,0.6);
+            border: 1px solid var(--border-color);
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            color: var(--cinza-texto);
+            margin-bottom: 30px;
+            backdrop-filter: blur(4px);
+            transition: 0.3s;
+        }
+        .weather-badge:hover { border-color: var(--amarelo); color: var(--branco); }
+        .weather-icon { color: var(--amarelo); }
 
         /* BOTÕES */
         .btn-group { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
@@ -94,15 +114,22 @@
         /* --- AGENDAMENTO --- */
         .agendamento { padding: 100px 0; background: var(--bg-black); }
         
-        /* GRID INTELIGENTE: 1 coluna no celular, 2 no PC */
         .barber-grid { display: grid; grid-template-columns: 1fr; gap: 40px; max-width: 1000px; margin: 0 auto; }
         @media(min-width: 768px) { .barber-grid { grid-template-columns: 1fr 1fr; } }
         
         .barber-card { background: var(--bg-dark); border: 1px solid var(--border-color); padding: 5px; transition: 0.4s; position: relative; }
         .barber-card:hover { border-color: var(--amarelo); transform: translateY(-5px); }
         .barber-header { padding: 20px; text-align: center; background: linear-gradient(to bottom, var(--bg-dark), var(--bg-black)); border-bottom: 1px solid var(--border-color); }
-        .barber-photo { width: 100px; height: 100px; object-fit: cover; border-radius: 50%; border: 2px solid var(--border-color); margin-bottom: 15px; filter: grayscale(100%); transition: 0.3s; }
-        .barber-card:hover .barber-photo { filter: grayscale(0%); border-color: var(--amarelo); }
+        
+        /* FOTOS: Sem filtro preto e branco agora */
+        .barber-photo { 
+            width: 100px; height: 100px; object-fit: cover; border-radius: 50%; 
+            border: 2px solid var(--border-color); margin-bottom: 15px; 
+            transition: 0.3s;
+            /* Filtro removido para ficarem sempre coloridas */
+        }
+        .barber-card:hover .barber-photo { border-color: var(--amarelo); }
+        
         .barber-name { font-size: 1.5rem; color: var(--branco); }
         .barber-role { font-size: 0.8rem; color: var(--amarelo); font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
 
@@ -133,8 +160,16 @@
     <header>
         <div class="hero-bg"><div class="bg-slide slide1"></div><div class="bg-slide slide2"></div><div class="bg-slide slide3"></div></div>
         <div class="header-content">
-            <div class="logo-placeholder">LOGO MANO A MANO</div>
+            
+            <img src="logo.png" alt="Logo Mano a Mano" class="logo-img">
+
             <h1 class="hero-title">ESTILO • RESPEITO • TRADIÇÃO</h1>
+
+            <div id="weatherWidget" class="weather-badge">
+                <i data-lucide="map-pin" class="weather-icon" style="width: 14px;"></i> ITAJUBÁ
+                <span style="color: #333;">|</span>
+                <i data-lucide="thermometer" class="weather-icon" style="width: 14px;"></i> <span id="tempValue">--</span>°C
+            </div>
             
             <div class="btn-group">
                 <a href="#richard" class="btn-primary" onclick="setBarbeiro('richard')">
@@ -225,10 +260,33 @@
     <script>
         lucide.createIcons();
         let barbeiroSelecionado = 'richard';
+
         function setBarbeiro(nome) {
             barbeiroSelecionado = nome;
             console.log("Foco no barbeiro: " + nome);
         }
+
+        // --- SCRIPT DE PREVISÃO DO TEMPO (Open-Meteo) ---
+        async function getWeather() {
+            try {
+                // Coordenadas de Itajubá, MG (-22.42, -45.45)
+                const response = await fetch('https://api.open-meteo.com/v1/forecast?latitude=-22.4269&longitude=-45.4533&current=temperature_2m&timezone=America%2FSao_Paulo');
+                const data = await response.json();
+                
+                if(data.current && data.current.temperature_2m) {
+                    // Arredonda para não mostrar casa decimal (Ex: 25.4 -> 25)
+                    document.getElementById('tempValue').innerText = Math.round(data.current.temperature_2m);
+                }
+            } catch (error) {
+                console.log("Erro ao carregar tempo:", error);
+                document.getElementById('weatherWidget').style.display = 'none'; // Esconde se der erro
+            }
+        }
+        // Chama a função assim que carrega
+        getWeather();
+
+
+        // --- SCRIPT AGENDAMENTO ---
         window.addEventListener('message', function(e) {
             if (e.data.event && e.data.event === 'calendly.event_scheduled') {
                 document.getElementById('allWidgets').style.display = 'none';
