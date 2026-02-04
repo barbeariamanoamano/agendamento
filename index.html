@@ -3,177 +3,244 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:title" content="Barbearia Mano a Mano">
+    <meta property="og:description" content="Estilo, Respeito e Tradição. Agende seu horário agora.">
+    <meta property="og:image" content="capa.jpg"> 
     <title>Barbearia Mano a Mano</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
 
+    <script src="https://unpkg.com/lucide@latest"></script>
+
     <style>
-        :root { --preto: #000; --amarelo: #FFD700; --verde-zap: #25D366; --fonte-titulo: 'Oswald', sans-serif; --fonte-texto: 'Montserrat', sans-serif; }
-        body { font-family: var(--fonte-texto); margin: 0; background-color: var(--preto); color: #fff; text-align: center; overflow-x: hidden; }
+        :root {
+            --bg-black: #000000;
+            --bg-dark: #0a0a0a;
+            --border-color: #262626;
+            --amarelo: #FACC15;
+            --branco: #ffffff;
+            --cinza-texto: #a3a3a3;
+            --verde-zap: #25D366;
+            --font-display: 'Oswald', sans-serif;
+            --font-body: 'Montserrat', sans-serif;
+        }
 
-        /* Botão Flutuante */
-        .social-floating { position: fixed; top: 15px; left: 15px; z-index: 9999; }
-        .btn-float { width: 40px; height: 40px; border-radius: 50%; background: rgba(0,0,0,0.6); border: 1px solid var(--amarelo); display: flex; align-items: center; justify-content: center; color: #fff; transition: 0.3s; }
-        .btn-float:hover { transform: scale(1.1); background: var(--amarelo); color: #000; }
-        .btn-float svg { width: 20px; height: 20px; fill: currentColor; }
+        * { box-sizing: border-box; }
+        body { font-family: var(--font-body); margin: 0; background-color: var(--bg-black); color: var(--branco); overflow-x: hidden; }
 
-        /* Header */
-        header { position: relative; height: 520px; display: flex; align-items: center; justify-content: center; border-bottom: 2px solid var(--amarelo); overflow: hidden; }
+        /* UTILITÁRIOS */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        h1, h2, h3 { font-family: var(--font-display); text-transform: uppercase; margin: 0; }
+        p { color: var(--cinza-texto); line-height: 1.6; }
+
+        /* --- BOTÃO FLUTUANTE --- */
+        .social-floating { position: fixed; top: 20px; left: 20px; z-index: 9999; }
+        .btn-float { width: 45px; height: 45px; background: rgba(0,0,0,0.8); border: 1px solid var(--amarelo); display: flex; align-items: center; justify-content: center; color: var(--branco); border-radius: 50%; transition: 0.3s; backdrop-filter: blur(5px); }
+        .btn-float:hover { background: var(--amarelo); color: #000; transform: scale(1.1); }
+
+        /* --- HERO SECTION --- */
+        header { position: relative; height: 90vh; min-height: 600px; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid var(--border-color); overflow: hidden; }
+        .hero-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; opacity: 0.4; }
         .bg-slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; opacity: 0; animation: slideShow 18s ease-in-out infinite; }
         .slide1 { background-image: url('foto1.jpg'); animation-delay: 0s; }
         .slide2 { background-image: url('foto2.jpg'); animation-delay: 6s; }
         .slide3 { background-image: url('foto3.jpg'); animation-delay: 12s; }
         @keyframes slideShow { 0% { opacity: 0; transform: scale(1.1); } 10% { opacity: 1; } 33% { opacity: 1; } 43% { opacity: 0; transform: scale(1); } 100% { opacity: 0; } }
-        .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1; }
-        .header-content { position: relative; z-index: 2; padding: 20px; }
-        .logo-img { max-width: 280px; margin-bottom: 20px; }
-        .slogan { font-size: 0.8rem; letter-spacing: 4px; color: #aaa; margin-bottom: 30px; text-transform: uppercase; }
 
-        /* Botões Topo */
-        .cta-container { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
-        .btn-hero { background: var(--amarelo); color: #000; padding: 14px 25px; text-decoration: none; font-family: var(--fonte-titulo); font-weight: 700; text-transform: uppercase; border-radius: 4px; transition: 0.3s; min-width: 180px; border: 2px solid var(--amarelo); }
-        .btn-hero.alt { background: transparent; color: var(--amarelo); }
-        .btn-hero:hover { background: #fff; color: #000; }
-
-        /* Preços */
-        .secao-precos { padding: 80px 20px; background: #000; }
-        .secao-precos h2 { font-family: var(--fonte-titulo); font-size: 1.8rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 30px; }
-        .slider-wrapper { max-width: 500px; margin: 0 auto; overflow: hidden; }
-        .slider-track { display: flex; transition: transform 0.5s ease-in-out; width: 200%; }
-        .slider-page { width: 50%; flex-shrink: 0; padding: 0 15px; box-sizing: border-box; display: flex; flex-direction: column; gap: 10px; }
-        .price-row { display: flex; justify-content: space-between; align-items: center; padding: 15px; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
-        .service-info { text-align: left; }
-        .service-info h3 { font-family: var(--fonte-titulo); margin: 0; font-size: 1rem; text-transform: uppercase; }
-        .service-info p { margin: 2px 0 0; font-size: 0.7rem; color: #666; }
-        .service-price { font-family: var(--fonte-titulo); color: var(--amarelo); font-size: 1.4rem; font-weight: 700; }
-        .dots-container { display: flex; justify-content: center; gap: 10px; margin-top: 25px; }
-        .dot { width: 10px; height: 10px; background-color: #222; border-radius: 50%; cursor: pointer; }
-        .dot.active { background-color: var(--amarelo); }
-
-        /* Agendamento */
-        .agendamento { padding: 60px 20px; background: #000; min-height: 800px; }
-        .barber-section { padding-top: 40px; margin-bottom: 80px; scroll-margin-top: 40px; transition: 0.3s; }
-        /* Efeito visual para saber onde está o foco */
-        .barber-section:hover { border-left: 2px solid var(--amarelo); }
+        .header-content { position: relative; z-index: 2; text-align: center; max-width: 800px; padding: 20px; }
+        .logo-placeholder { font-family: var(--font-display); font-size: 3rem; color: var(--amarelo); font-weight: 900; margin-bottom: 30px; letter-spacing: -1px; }
         
-        .barber-photo { width: 130px; height: 130px; border-radius: 50%; object-fit: cover; border: 3px solid var(--amarelo); }
-        .barber-name { font-family: var(--fonte-titulo); color: var(--amarelo); margin-top: 15px; font-size: 1.5rem; text-transform: uppercase; }
-        .container-calendly { max-width: 1000px; margin: 0 auto; border-radius: 12px; overflow: hidden; border: 1px solid #111; background: #000; }
+        /* Título ajustado (Menor) */
+        .hero-title { font-size: 3rem; font-weight: 900; line-height: 1; margin-bottom: 40px; letter-spacing: -1px; }
+        @media (max-width: 768px) { .hero-title { font-size: 2rem; } }
 
-        /* Sucesso */
-        #successContainer { display: none; max-width: 500px; margin: 50px auto; padding: 40px 20px; background: #0a0a0a; border: 2px solid var(--amarelo); border-radius: 20px; }
-        .btn-zap-final { display: block; background: var(--verde-zap); color: #fff; padding: 22px; border-radius: 10px; text-decoration: none; font-weight: 700; font-size: 1.1rem; text-transform: uppercase; animation: pulse 1.5s infinite; }
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.03); } 100% { transform: scale(1); } }
-        footer { background: #050505; padding: 60px 20px; border-top: 1px solid #111; color: #333; font-size: 0.8rem; }
+        /* BOTÕES */
+        .btn-group { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
+        .btn-primary { background: var(--amarelo); color: #000; padding: 16px 32px; font-family: var(--font-display); font-weight: 700; text-transform: uppercase; text-decoration: none; letter-spacing: 1px; border: 1px solid var(--amarelo); transition: 0.3s; display: inline-flex; align-items: center; gap: 10px; }
+        .btn-primary:hover { background: transparent; color: var(--amarelo); box-shadow: 0 0 20px rgba(250, 204, 21, 0.2); }
+        .btn-outline { background: transparent; color: var(--branco); padding: 16px 32px; font-family: var(--font-display); font-weight: 700; text-transform: uppercase; text-decoration: none; letter-spacing: 1px; border: 1px solid var(--border-color); transition: 0.3s; }
+        .btn-outline:hover { border-color: var(--amarelo); color: var(--amarelo); }
+
+        /* --- PREÇOS --- */
+        .secao-precos { padding: 100px 0; background: var(--bg-dark); }
+        .section-header { margin-bottom: 60px; text-align: center; }
+        .section-title { font-size: 3rem; font-weight: 900; letter-spacing: -1px; margin-bottom: 10px; }
+        
+        .price-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .price-card {
+            background: var(--bg-black);
+            border: 1px solid var(--border-color);
+            padding: 25px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+            cursor: default; 
+        }
+        .price-card:hover { transform: translateY(-5px); box-shadow: 0 8px 12px rgba(0, 0, 0, 0.4); border-color: #404040; }
+        .price-card h3 { font-size: 1.3rem; margin-bottom: 10px; color: var(--branco); }
+        .price-card p { font-size: 0.9rem; margin-bottom: 20px; color: var(--cinza-texto); }
+        .price-value { font-family: var(--font-display); color: var(--amarelo); font-size: 1.8rem; font-weight: 700; display: block; }
+
+        /* --- AGENDAMENTO --- */
+        .agendamento { padding: 100px 0; background: var(--bg-black); }
+        
+        /* GRID INTELIGENTE: 1 coluna no celular, 2 no PC */
+        .barber-grid { display: grid; grid-template-columns: 1fr; gap: 40px; max-width: 1000px; margin: 0 auto; }
+        @media(min-width: 768px) { .barber-grid { grid-template-columns: 1fr 1fr; } }
+        
+        .barber-card { background: var(--bg-dark); border: 1px solid var(--border-color); padding: 5px; transition: 0.4s; position: relative; }
+        .barber-card:hover { border-color: var(--amarelo); transform: translateY(-5px); }
+        .barber-header { padding: 20px; text-align: center; background: linear-gradient(to bottom, var(--bg-dark), var(--bg-black)); border-bottom: 1px solid var(--border-color); }
+        .barber-photo { width: 100px; height: 100px; object-fit: cover; border-radius: 50%; border: 2px solid var(--border-color); margin-bottom: 15px; filter: grayscale(100%); transition: 0.3s; }
+        .barber-card:hover .barber-photo { filter: grayscale(0%); border-color: var(--amarelo); }
+        .barber-name { font-size: 1.5rem; color: var(--branco); }
+        .barber-role { font-size: 0.8rem; color: var(--amarelo); font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
+
+        /* TELA DE SUCESSO */
+        #successContainer { display: none; max-width: 600px; margin: 50px auto; background: var(--bg-dark); border: 1px solid var(--amarelo); padding: 60px 20px; text-align: center; box-shadow: 0 0 50px rgba(250, 204, 21, 0.1); }
+        .success-icon { color: var(--amarelo); margin-bottom: 20px; }
+        .btn-zap { display: block; width: 100%; max-width: 300px; margin: 30px auto 0; background: var(--verde-zap); color: #fff; padding: 20px; font-weight: 700; text-transform: uppercase; text-decoration: none; border-radius: 4px; animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.02); } 100% { transform: scale(1); } }
+
+        /* --- LOCALIZAÇÃO --- */
+        .localizacao { padding: 100px 0; background: var(--bg-dark); border-top: 1px solid var(--border-color); }
+        .map-frame { border: 1px solid var(--border-color); filter: grayscale(100%) invert(100%) contrast(0.9); transition: 0.5s; }
+        .map-frame:hover { filter: none; border-color: var(--amarelo); }
+
+        /* --- FOOTER --- */
+        footer { background: var(--bg-black); padding: 60px 0; border-top: 1px solid var(--border-color); text-align: center; }
+        .footer-logo { font-family: var(--font-display); font-size: 2rem; color: var(--amarelo); font-weight: 900; letter-spacing: -1px; }
     </style>
 </head>
 <body>
 
     <div class="social-floating">
-        <a href="https://wa.me/5535984422957" target="_blank" class="btn-float"><svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2M12.05 3.67C14.25 3.67 16.31 4.53 17.87 6.09C19.42 7.65 20.28 9.72 20.28 11.92C20.28 16.46 16.58 20.15 12.04 20.15C10.56 20.15 9.11 19.76 7.85 19L7.55 18.83L4.43 19.65L5.26 16.61L5.06 16.29C4.24 15 3.8 13.47 3.8 11.91C3.81 7.37 7.5 3.67 12.05 3.67Z"/></svg></a>
+        <a href="https://wa.me/5535984422957" target="_blank" class="btn-float">
+            <i data-lucide="message-circle"></i>
+        </a>
     </div>
 
     <header>
-        <div class="hero-bg-slider"><div class="bg-slide slide1"></div><div class="bg-slide slide2"></div><div class="bg-slide slide3"></div></div>
-        <div class="hero-overlay"></div>
+        <div class="hero-bg"><div class="bg-slide slide1"></div><div class="bg-slide slide2"></div><div class="bg-slide slide3"></div></div>
         <div class="header-content">
-            <img src="logo.png" alt="Mano a Mano" class="logo-img">
-            <p class="slogan">ESTILO • RESPEITO • TRADIÇÃO</p>
-            <div class="cta-container">
-                <a href="#richard" class="btn-hero" onclick="setBarbeiro('richard')">Agendar c/ Richard</a>
-                <a href="#walisson" class="btn-hero alt" onclick="setBarbeiro('walisson')">Agendar c/ Walisson</a>
+            <div class="logo-placeholder">LOGO MANO A MANO</div>
+            <h1 class="hero-title">ESTILO • RESPEITO • TRADIÇÃO</h1>
+            
+            <div class="btn-group">
+                <a href="#richard" class="btn-primary" onclick="setBarbeiro('richard')">
+                    AGENDAR C/ RICHARD
+                </a>
+                <a href="#walisson" class="btn-primary" onclick="setBarbeiro('walisson')">
+                    AGENDAR C/ WALISSON
+                </a>
+            </div>
+            
+            <div style="margin-top: 60px;">
+                <a href="#localizacao" class="btn-outline">ONDE ESTAMOS</a>
             </div>
         </div>
     </header>
 
     <section class="secao-precos">
-        <h2>Serviços & Preços</h2>
-        <div class="slider-wrapper"><div class="slider-track" id="sliderTrack">
-            <div class="slider-page">
-                <div class="price-row"><div class="service-info"><h3>Corte Tradicional</h3></div><div class="service-price">R$ 20</div></div>
-                <div class="price-row"><div class="service-info"><h3>Corte Estilizado</h3></div><div class="service-price">R$ 25</div></div>
-                <div class="price-row"><div class="service-info"><h3>Barba Completa</h3></div><div class="service-price">R$ 16</div></div>
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">NOSSOS <span style="color: var(--amarelo);">SERVIÇOS</span></h2>
+                <p class="section-desc">Tabela atualizada. Preço justo, qualidade premium.</p>
             </div>
-            <div class="slider-page">
-                <div class="price-row"><div class="service-info"><h3>Luzes</h3></div><div class="service-price">R$ 40</div></div>
-                <div class="price-row"><div class="service-info"><h3>Sobrancelha</h3></div><div class="service-price">R$ 10</div></div>
-                <div class="price-row"><div class="service-info"><h3>Combo Master</h3></div><div class="service-price">R$ 45</div></div>
+
+            <div class="price-grid">
+                <div class="price-card"><h3>Corte Tradicional</h3><p>Máquina e tesoura</p><span class="price-value">R$ 20</span></div>
+                <div class="price-card"><h3>Corte Estilizado</h3><p>Fade, Navalhado e Freestyle</p><span class="price-value">R$ 25</span></div>
+                <div class="price-card"><h3>Barba Completa</h3><p>Toalha quente e massagem</p><span class="price-value">R$ 16</span></div>
+                <div class="price-card"><h3>Luzes / Platinado</h3><p>Matização premium</p><span class="price-value">R$ 40</span></div>
+                <div class="price-card"><h3>Sobrancelha</h3><p>Design na navalha</p><span class="price-value">R$ 10</span></div>
+                <div class="price-card"><h3>Combo Master</h3><p>Corte + Barba + Sobrancelha</p><span class="price-value">R$ 45</span></div>
             </div>
-        </div></div>
-        <div class="dots-container"><div class="dot active" onclick="moveSlider(0)"></div><div class="dot" onclick="moveSlider(1)"></div></div>
+        </div>
     </section>
 
-    <section class="agendamento">
-        <div id="successContainer">
-            <h2 class="success-title">RESERVA CONCLUÍDA!</h2>
-            <p class="success-text">Horário reservado. Clique abaixo para confirmar no WhatsApp:</p>
-            <a id="whatsappBtn" href="#" class="btn-zap-final" target="_blank">FINALIZAR NO WHATSAPP</a>
-        </div>
+    <section id="agendamento" class="agendamento">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">AGENDE SEU <span style="color: var(--amarelo);">HORÁRIO</span></h2>
+            </div>
 
-        <div id="allWidgets">
+            <div id="successContainer">
+                <div class="success-icon"><i data-lucide="check-circle" width="60" height="60"></i></div>
+                <h2 style="font-size: 2rem; margin-bottom: 20px;">AGENDAMENTO CONFIRMADO!</h2>
+                <p>Seu horário está reservado. Clique abaixo para confirmar no WhatsApp:</p>
+                <a id="whatsappBtn" href="#" class="btn-zap" target="_blank">FINALIZAR NO WHATSAPP</a>
+            </div>
+
+            <div id="allWidgets" class="barber-grid">
+                <div id="richard" class="barber-card" onmouseenter="setBarbeiro('richard')" ontouchstart="setBarbeiro('richard')">
+                    <div class="barber-header"><img src="richard.jpg" class="barber-photo"><h3 class="barber-name">RICHARD</h3><span class="barber-role">BARBER PRO</span></div>
+                    <div style="height: 600px; overflow: hidden;"><div class="calendly-inline-widget" data-url="https://calendly.com/juniorrichard703/agenda?hide_gdpr_banner=1&background_color=0a0a0a&text_color=ffffff&primary_color=FACC15" style="min-width:320px;height:700px;"></div></div>
+                </div>
+                <div id="walisson" class="barber-card" onmouseenter="setBarbeiro('walisson')" ontouchstart="setBarbeiro('walisson')">
+                    <div class="barber-header"><img src="wallison.jpg" class="barber-photo"><h3 class="barber-name">WALISSON</h3><span class="barber-role">BARBER PRO</span></div>
+                    <div style="height: 600px; overflow: hidden;"><div class="calendly-inline-widget" data-url="https://calendly.com/walissonrodrigo545/agenda?hide_gdpr_banner=1&background_color=0a0a0a&text_color=ffffff&primary_color=FACC15" style="min-width:320px;height:700px;"></div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="localizacao" class="localizacao">
+        <div class="container" style="text-align: center;">
+            <h2 class="section-title" style="font-size: 2rem; margin-bottom: 40px;">ONDE <span style="color: var(--amarelo);">ESTAMOS</span></h2>
             
-            <div id="richard" class="barber-section" onmouseenter="setBarbeiro('richard')" ontouchstart="setBarbeiro('richard')">
-                <div class="barber-profile"><img src="richard.jpg" class="barber-photo"><h3 class="barber-name">Richard</h3></div>
-                <div class="container-calendly">
-                    <div class="calendly-inline-widget" data-url="https://calendly.com/juniorrichard703/agenda?hide_gdpr_banner=1&background_color=000000&text_color=ffffff&primary_color=ffd700" style="min-width:320px;height:700px;"></div>
-                </div>
+            <div style="max-width: 900px; margin: 0 auto; height: 400px;" class="map-frame">
+                <iframe 
+                    src="https://maps.google.com/maps?q=R.+Jos%C3%A9+Souza+Rezende,+203+-+Rebourgeon,+Itajub%C3%A1+-+MG&t=&z=17&ie=UTF8&iwloc=&output=embed" 
+                    width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy">
+                </iframe>
             </div>
-
-            <hr style="border:0; border-top: 1px solid #111; margin: 40px auto; max-width: 200px;">
-
-            <div id="walisson" class="barber-section" onmouseenter="setBarbeiro('walisson')" ontouchstart="setBarbeiro('walisson')">
-                <div class="barber-profile"><img src="wallison.jpg" class="barber-photo"><h3 class="barber-name">Walisson</h3></div>
-                <div class="container-calendly">
-                    <div class="calendly-inline-widget" data-url="https://calendly.com/walissonrodrigo545/agenda?hide_gdpr_banner=1&background_color=000000&text_color=ffffff&primary_color=ffd700" style="min-width:320px;height:700px;"></div>
-                </div>
+            
+            <div style="margin-top: 30px;">
+                <p style="font-size: 1.1rem; color: #fff;">R. José Souza Rezende, 203 - Rebourgeon, Itajubá - MG</p>
+                <a href="https://www.google.com/maps/search/?api=1&query=R.+Jos%C3%A9+Souza+Rezende,+203+-+Rebourgeon,+Itajub%C3%A1+-+MG" target="_blank" class="btn-outline" style="margin-top: 20px; display: inline-block;">
+                    TRAÇAR ROTA NO GPS
+                </a>
             </div>
-
         </div>
     </section>
 
-    <footer>MANO A MANO • 2026</footer>
+    <footer>
+        <div class="container">
+            <div class="footer-logo">MANO A MANO</div>
+            <p style="font-size: 0.8rem; margin-top: 10px; text-transform: uppercase; letter-spacing: 2px;">© 2026. Todos os direitos reservados.</p>
+        </div>
+    </footer>
 
-    <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
     <script>
-        function moveSlider(index) {
-            const track = document.getElementById('sliderTrack');
-            const dots = document.querySelectorAll('.dot');
-            if(track) track.style.transform = `translateX(-${index * 50}%)`;
-            dots.forEach(dot => dot.classList.remove('active'));
-            if(dots[index]) dots[index].classList.add('active');
-        }
-
-        // --- SISTEMA DE RASTREAMENTO INTELIGENTE ---
-        
-        // 1. Variável que guarda quem é o barbeiro da vez
-        let barbeiroSelecionado = 'richard'; // Começa com Richard por padrão
-
-        // 2. Função que atualiza a variável quando o cliente clica ou passa o mouse
+        lucide.createIcons();
+        let barbeiroSelecionado = 'richard';
         function setBarbeiro(nome) {
             barbeiroSelecionado = nome;
-            console.log("Cliente focado em: " + nome);
+            console.log("Foco no barbeiro: " + nome);
         }
-
-        // 3. O Grande Final
         window.addEventListener('message', function(e) {
             if (e.data.event && e.data.event === 'calendly.event_scheduled') {
-                
-                // Esconde agenda / Mostra sucesso
                 document.getElementById('allWidgets').style.display = 'none';
                 document.getElementById('successContainer').style.display = 'block';
-
-                // Define as variáveis baseado no RASTREAMENTO que fizemos
+                document.getElementById('agendamento').scrollIntoView({behavior: 'smooth'});
+                
                 let zapNumero = "5535984422957"; 
-                let zapMsg = "Oi Richard! Agendei pelo site e quero confirmar.";
-
+                let zapMsg = "Fala Richard! Agendei um horário no site e quero confirmar.";
                 if (barbeiroSelecionado === 'walisson') {
                     zapNumero = "5535984273273"; 
-                    zapMsg = "Oi Walisson! Agendei pelo site e quero confirmar.";
+                    zapMsg = "Fala Walisson! Agendei um horário no site e quero confirmar.";
                 }
-
-                // Cria o link
                 const btnZap = document.getElementById('whatsappBtn');
                 if (btnZap) {
                     btnZap.href = "https://wa.me/" + zapNumero + "?text=" + encodeURIComponent(zapMsg);
@@ -181,5 +248,6 @@
             }
         });
     </script>
+    <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
 </body>
 </html>
