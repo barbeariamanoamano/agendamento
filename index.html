@@ -57,7 +57,7 @@
         }
         .btn-float:hover { background: var(--amarelo); color: #000; transform: scale(1.1); }
 
-        /* --- HERO SECTION (TOPO) --- */
+        /* --- HERO SECTION --- */
         header { 
             position: relative; 
             height: 90vh; 
@@ -149,7 +149,7 @@
             text-align: center;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
             transition: transform 0.3s ease;
-            cursor: default; /* Mostra que não é clicável */
+            cursor: default;
         }
         .price-card:hover { 
             transform: translateY(-5px); 
@@ -163,7 +163,6 @@
         /* --- AGENDAMENTO --- */
         .agendamento { padding: 100px 0; background: var(--bg-black); }
         
-        /* Grid responsivo: 1 coluna no celular, 2 no PC */
         .barber-grid { 
             display: grid; grid-template-columns: 1fr; 
             gap: 40px; max-width: 1000px; margin: 0 auto; 
@@ -301,10 +300,9 @@
                 
                 <div id="richard" class="barber-card" onmouseenter="setBarbeiro('richard')" ontouchstart="setBarbeiro('richard')">
                     <div class="barber-header"><img src="richard.jpg" class="barber-photo"><h3 class="barber-name">RICHARD</h3><span class="barber-role">BARBER PRO</span></div>
-                    
-                    <div style="min-height: 1000px;">
+                    <div style="min-height: 1000px; background-color: #000000;">
                         <div class="calendly-inline-widget" 
-                             data-url="https://calendly.com/juniorrichard703/agenda?hide_gdpr_banner=1&background_color=000000&text_color=ffffff&primary_color=FACC15" 
+                             data-url="https://calendly.com/juniorrichard703/agenda?hide_gdpr_banner=1&background_color=0a0a0a&text_color=ffffff&primary_color=FACC15" 
                              style="min-width:320px;height:1000px;">
                         </div>
                     </div>
@@ -312,10 +310,9 @@
 
                 <div id="walisson" class="barber-card" onmouseenter="setBarbeiro('walisson')" ontouchstart="setBarbeiro('walisson')">
                     <div class="barber-header"><img src="wallison.jpg" class="barber-photo"><h3 class="barber-name">WALISSON</h3><span class="barber-role">BARBER PRO</span></div>
-                    
-                    <div style="min-height: 1000px;">
+                    <div style="min-height: 1000px; background-color: #000000;">
                         <div class="calendly-inline-widget" 
-                             data-url="https://calendly.com/walissonrodrigo545/agenda?hide_gdpr_banner=1&background_color=000000&text_color=ffffff&primary_color=FACC15" 
+                             data-url="https://calendly.com/walissonrodrigo545/agenda?hide_gdpr_banner=1&background_color=0a0a0a&text_color=ffffff&primary_color=FACC15" 
                              style="min-width:320px;height:1000px;">
                         </div>
                     </div>
