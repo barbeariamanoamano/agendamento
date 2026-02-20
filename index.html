@@ -5,14 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <meta property="og:title" content="Barbearia Mano a Mano">
-    <meta property="og:description" content="Estilo, Respeito e Tradição. Agende seu horário agora.">
+    <meta property="og:description" content="Estilo, Respeito e Tradição. Agende o seu horário agora.">
     <meta property="og:image" content="capa.jpg"> 
     
     <title>Barbearia Mano a Mano</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
 
     <script src="https://unpkg.com/lucide@latest"></script>
 
@@ -21,12 +21,19 @@
             --bg-black: #000000;
             --bg-dark: #0a0a0a;
             --border-color: #262626;
-            --amarelo: #FACC15; /* Amarelo Studiozada */
+            --amarelo: #FACC15;
             --branco: #ffffff;
             --cinza-texto: #a3a3a3;
             --verde-zap: #25D366;
             --font-display: 'Oswald', sans-serif;
             --font-body: 'Montserrat', sans-serif;
+            
+            /* Variáveis para a Secção Clara */
+            --light-bg: #F8F9FA; 
+            --light-card-bg: #ffffff;
+            --light-text-primary: #1a1a1a;
+            --light-text-secondary: #666666;
+            --light-border: #e5e7eb;
         }
 
         * { box-sizing: border-box; }
@@ -47,221 +54,214 @@
 
         /* --- BOTÃO FLUTUANTE ZAP --- */
         .social-floating { position: fixed; top: 20px; left: 20px; z-index: 9999; }
-        .btn-float { 
-            width: 45px; height: 45px; 
-            background: rgba(0,0,0,0.8); 
-            border: 1px solid var(--amarelo); 
-            display: flex; align-items: center; justify-content: center; 
-            color: var(--branco); border-radius: 50%; 
-            transition: 0.3s; backdrop-filter: blur(5px); 
-        }
+        .btn-float { width: 45px; height: 45px; background: rgba(0,0,0,0.8); border: 1px solid var(--amarelo); display: flex; align-items: center; justify-content: center; color: var(--branco); border-radius: 50%; transition: 0.3s; backdrop-filter: blur(5px); }
         .btn-float:hover { background: var(--amarelo); color: #000; transform: scale(1.1); }
 
         /* --- HERO SECTION --- */
-        header { 
-            position: relative; 
-            height: 90vh; 
-            min-height: 700px; 
-            display: flex; align-items: center; justify-content: center; 
-            border-bottom: 1px solid var(--border-color); 
-            overflow: hidden; 
-        }
-        
-        /* Background Slider */
+        header { position: relative; height: 90vh; min-height: 700px; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid var(--border-color); overflow: hidden; }
         .hero-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; opacity: 0.4; }
-        .bg-slide { 
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
-            background-size: cover; background-position: center; 
-            opacity: 0; animation: slideShow 18s ease-in-out infinite; 
-        }
+        .bg-slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; opacity: 0; animation: slideShow 18s ease-in-out infinite; }
         .slide1 { background-image: url('foto1.jpg'); animation-delay: 0s; }
         .slide2 { background-image: url('foto2.jpg'); animation-delay: 6s; }
         .slide3 { background-image: url('foto3.jpg'); animation-delay: 12s; }
         @keyframes slideShow { 0% { opacity: 0; transform: scale(1.1); } 10% { opacity: 1; } 33% { opacity: 1; } 43% { opacity: 0; transform: scale(1); } 100% { opacity: 0; } }
-
         .header-content { position: relative; z-index: 2; text-align: center; max-width: 800px; padding: 20px; }
-        
-        /* LOGO */
         .logo-img { max-width: 300px; margin-bottom: 20px; width: 100%; height: auto; }
-
-        .hero-title { 
-            font-size: 3rem; 
-            font-weight: 900; 
-            line-height: 1; 
-            margin-bottom: 20px; 
-            letter-spacing: -1px; 
-        }
+        .hero-title { font-size: 3rem; font-weight: 900; line-height: 1; margin-bottom: 20px; letter-spacing: -1px; }
         @media (max-width: 768px) { .hero-title { font-size: 2rem; } }
 
         /* WIDGET DE TEMPO */
-        .weather-badge {
-            display: inline-flex; align-items: center; gap: 8px;
-            background: rgba(0,0,0,0.6);
-            border: 1px solid var(--border-color);
-            padding: 8px 16px; border-radius: 50px;
-            font-family: var(--font-display); font-size: 0.9rem;
-            color: var(--cinza-texto); margin-bottom: 30px;
-            backdrop-filter: blur(4px); transition: 0.3s;
-        }
+        .weather-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(0,0,0,0.6); border: 1px solid var(--border-color); padding: 8px 16px; border-radius: 50px; font-family: var(--font-display); font-size: 0.9rem; color: var(--cinza-texto); margin-bottom: 30px; backdrop-filter: blur(4px); transition: 0.3s; }
         .weather-badge:hover { border-color: var(--amarelo); color: var(--branco); }
         .weather-icon { color: var(--amarelo); }
 
         /* BOTÕES */
         .btn-group { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
-        
-        .btn-primary { 
-            background: var(--amarelo); color: #000; 
-            padding: 16px 32px; 
-            font-family: var(--font-display); font-weight: 700; 
-            text-transform: uppercase; text-decoration: none; letter-spacing: 1px; 
-            border: 1px solid var(--amarelo); transition: 0.3s; 
-            display: inline-flex; align-items: center; gap: 10px; 
-        }
-        .btn-primary:hover { 
-            background: transparent; color: var(--amarelo); 
-            box-shadow: 0 0 20px rgba(250, 204, 21, 0.2); 
-        }
-        
-        .btn-outline { 
-            background: transparent; color: var(--branco); 
-            padding: 16px 32px; 
-            font-family: var(--font-display); font-weight: 700; 
-            text-transform: uppercase; text-decoration: none; letter-spacing: 1px; 
-            border: 1px solid var(--border-color); transition: 0.3s; 
-        }
+        .btn-primary { background: var(--amarelo); color: #000; padding: 16px 32px; font-family: var(--font-display); font-weight: 700; text-transform: uppercase; text-decoration: none; letter-spacing: 1px; border: 1px solid var(--amarelo); transition: 0.3s; display: inline-flex; align-items: center; gap: 10px; }
+        .btn-primary:hover { background: transparent; color: var(--amarelo); box-shadow: 0 0 20px rgba(250, 204, 21, 0.2); }
+        .btn-outline { background: transparent; color: var(--branco); padding: 16px 32px; font-family: var(--font-display); font-weight: 700; text-transform: uppercase; text-decoration: none; letter-spacing: 1px; border: 1px solid var(--border-color); transition: 0.3s; }
         .btn-outline:hover { border-color: var(--amarelo); color: var(--amarelo); }
 
         /* --- PREÇOS --- */
         .secao-precos { padding: 100px 0; background: var(--bg-dark); }
         .section-header { margin-bottom: 60px; text-align: center; }
         .section-title { font-size: 3rem; font-weight: 900; letter-spacing: -1px; margin-bottom: 10px; }
-        
-        .price-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px; max-width: 1000px; margin: 0 auto;
-        }
-
-        .price-card {
-            background: var(--bg-black);
-            border: 1px solid var(--border-color);
-            padding: 25px; border-radius: 8px;
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s ease;
-            cursor: default;
-        }
-        .price-card:hover { 
-            transform: translateY(-5px); 
-            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.4); 
-            border-color: #404040; 
-        }
+        .price-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; max-width: 1000px; margin: 0 auto; }
+        .price-card { background: var(--bg-black); border: 1px solid var(--border-color); padding: 25px; border-radius: 8px; text-align: center; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); transition: transform 0.3s ease; cursor: default; }
+        .price-card:hover { transform: translateY(-5px); box-shadow: 0 8px 12px rgba(0, 0, 0, 0.4); border-color: #404040; }
         .price-card h3 { font-size: 1.3rem; margin-bottom: 10px; color: var(--branco); }
         .price-card p { font-size: 0.9rem; margin-bottom: 20px; color: var(--cinza-texto); }
         .price-value { font-family: var(--font-display); color: var(--amarelo); font-size: 1.8rem; font-weight: 700; display: block; }
 
-        /* --- AGENDAMENTO --- */
-        .agendamento { padding: 100px 0; background: var(--bg-black); }
-        
-        .barber-grid { 
-            display: grid; grid-template-columns: 1fr; 
-            gap: 40px; max-width: 1000px; margin: 0 auto; 
+
+        /* ==================================================================
+           --- SECÇÃO DE AGENDAMENTO ---
+           ================================================================== */
+        .agendamento { 
+            padding: 100px 0; 
+            background: var(--light-bg); 
+            color: var(--light-text-primary);
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
+
+        .agendamento .section-title { color: var(--light-text-primary); }
+        .agendamento p.section-desc { color: var(--light-text-secondary); }
+        
+        .barber-grid { display: grid; grid-template-columns: 1fr; gap: 40px; max-width: 1000px; margin: 0 auto; }
         @media(min-width: 768px) { .barber-grid { grid-template-columns: 1fr 1fr; } }
         
+        /* ==================================================================
+           --- OS QUADRADOS COM A "COBRINHA ELÉTRICA" ---
+           ================================================================== */
         .barber-card { 
-            background: var(--bg-dark); 
-            border: 1px solid var(--border-color); 
-            padding: 5px; 
-            transition: 0.4s; position: relative; 
+            background: var(--light-card-bg); 
+            border-radius: 12px; 
+            overflow: hidden; 
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08); 
+            transition: 0.4s; 
+            position: relative; /* Necessário para as linhas andarem aqui dentro */
+            border: none; /* Remove a borda antiga para dar lugar ao néon */
         }
-        .barber-card:hover { border-color: var(--amarelo); transform: translateY(-5px); }
         
+        /* O Efeito Hover faz o cartão flutuar */
+        .barber-card:hover { 
+            transform: translateY(-8px); 
+            box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+        }
+
+        /* As 4 linhas que formam a enguia elétrica */
+        .snake-top, .snake-right, .snake-bottom, .snake-left {
+            position: absolute;
+            background: var(--amarelo);
+            box-shadow: 0 0 10px var(--amarelo), 0 0 20px var(--amarelo); /* Brilho Néon */
+            z-index: 10;
+        }
+
+        /* Topo (Esquerda para Direita) */
+        .snake-top {
+            top: 0; left: -100%; width: 100%; height: 4px;
+            background: linear-gradient(90deg, transparent, var(--amarelo));
+            animation: moveTop 3s linear infinite;
+        }
+        @keyframes moveTop { 0% { left: -100%; } 50%, 100% { left: 100%; } }
+
+        /* Direita (Cima para Baixo) */
+        .snake-right {
+            top: -100%; right: 0; width: 4px; height: 100%;
+            background: linear-gradient(180deg, transparent, var(--amarelo));
+            animation: moveRight 3s linear infinite;
+            animation-delay: 0.75s; /* Entra em cena depois do topo */
+        }
+        @keyframes moveRight { 0% { top: -100%; } 50%, 100% { top: 100%; } }
+
+        /* Fundo (Direita para Esquerda) */
+        .snake-bottom {
+            bottom: 0; right: -100%; width: 100%; height: 4px;
+            background: linear-gradient(270deg, transparent, var(--amarelo));
+            animation: moveBottom 3s linear infinite;
+            animation-delay: 1.5s;
+        }
+        @keyframes moveBottom { 0% { right: -100%; } 50%, 100% { right: 100%; } }
+
+        /* Esquerda (Baixo para Cima) */
+        .snake-left {
+            bottom: -100%; left: 0; width: 4px; height: 100%;
+            background: linear-gradient(360deg, transparent, var(--amarelo));
+            animation: moveLeft 3s linear infinite;
+            animation-delay: 2.25s;
+        }
+        @keyframes moveLeft { 0% { bottom: -100%; } 50%, 100% { bottom: 100%; } }
+        /* ================================================================== */
+
+
         .barber-header { 
-            padding: 20px; text-align: center; 
-            background: linear-gradient(to bottom, var(--bg-dark), var(--bg-black)); 
-            border-bottom: 1px solid var(--border-color); 
+            padding: 30px 20px; text-align: center; 
+            background: var(--light-card-bg);
+            border-bottom: 1px solid var(--light-border); 
+            position: relative; z-index: 2; /* Fica acima das linhas */
         }
         
         .barber-photo { 
-            width: 100px; height: 100px; 
+            width: 120px; height: 120px; 
             object-fit: cover; border-radius: 50%; 
-            border: 2px solid var(--border-color); margin-bottom: 15px; 
-            transition: 0.3s;
+            border: 3px solid var(--amarelo); 
+            margin-bottom: 15px; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
-        .barber-card:hover .barber-photo { border-color: var(--amarelo); }
         
-        .barber-name { font-size: 1.5rem; color: var(--branco); }
-        .barber-role { font-size: 0.8rem; color: var(--amarelo); font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
+        .barber-name { font-size: 1.8rem; color: var(--light-text-primary); font-weight: 700; }
+        .barber-role { font-size: 0.9rem; color: var(--amarelo); font-weight: 600; letter-spacing: 1px; text-transform: uppercase; margin-top: 5px; display: block; }
+        
+        /* Container do iframe para garantir fundo branco */
+        .iframe-container {
+            min-height: 1000px;
+            background-color: #ffffff;
+            position: relative; z-index: 2; /* Fica acima das linhas */
+        }
 
-        /* TELA DE SUCESSO */
+        /* ECRÃ DE SUCESSO */
         #successContainer { 
             display: none; max-width: 600px; margin: 50px auto; 
-            background: var(--bg-dark); border: 1px solid var(--amarelo); 
+            background: var(--light-card-bg); 
+            border: 2px solid var(--amarelo);
+            border-radius: 12px;
             padding: 60px 20px; text-align: center; 
-            box-shadow: 0 0 50px rgba(250, 204, 21, 0.1); 
+            box-shadow: 0 10px 40px rgba(250, 204, 21, 0.15); 
         }
+        #successContainer h2 { color: var(--light-text-primary); }
+        #successContainer p { color: var(--light-text-secondary); }
         .success-icon { color: var(--amarelo); margin-bottom: 20px; }
-        .btn-zap { 
-            display: block; width: 100%; max-width: 300px; margin: 30px auto 0; 
-            background: var(--verde-zap); color: #fff; padding: 20px; 
-            font-weight: 700; text-transform: uppercase; text-decoration: none; 
-            border-radius: 4px; animation: pulse 2s infinite; 
+        .btn-zap { display: block; width: 100%; max-width: 300px; margin: 30px auto 0; background: var(--verde-zap); color: #fff; padding: 20px; font-weight: 700; text-transform: uppercase; text-decoration: none; border-radius: 8px; animation: pulse 2s infinite; box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3); }
+
+        /* ==================================================================
+           --- INTEGRAÇÃO DE DARK MODE ---
+           ================================================================== */
+        @media (prefers-color-scheme: dark) {
+            .agendamento { background: var(--bg-black); color: var(--branco); }
+            .agendamento .section-title { color: var(--branco); }
+            .agendamento p.section-desc { color: var(--cinza-texto); }
+
+            .barber-card { background: var(--bg-dark); box-shadow: none; }
+            .barber-header { background: linear-gradient(to bottom, var(--bg-dark), var(--bg-black)); border-bottom-color: var(--border-color); }
+            .barber-name { color: var(--branco); }
+            .iframe-container { background-color: #000000 !important; }
+
+             #successContainer { background: var(--bg-dark); border: 1px solid var(--amarelo); box-shadow: 0 0 50px rgba(250, 204, 21, 0.1); }
+             #successContainer h2 { color: var(--branco); }
+             #successContainer p { color: var(--cinza-texto); }
         }
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.02); } 100% { transform: scale(1); } }
 
         /* --- LOCALIZAÇÃO --- */
         .localizacao { padding: 100px 0; background: var(--bg-dark); border-top: 1px solid var(--border-color); }
-        .map-frame { 
-            border: 1px solid var(--border-color); 
-            filter: grayscale(100%) invert(100%) contrast(0.9); 
-            transition: 0.5s; 
-        }
+        .map-frame { border: 1px solid var(--border-color); filter: grayscale(100%) invert(100%) contrast(0.9); transition: 0.5s; }
         .map-frame:hover { filter: none; border-color: var(--amarelo); }
 
         /* --- FOOTER --- */
-        footer { 
-            background: var(--bg-black); padding: 60px 0; 
-            border-top: 1px solid var(--border-color); text-align: center; 
-        }
+        footer { background: var(--bg-black); padding: 60px 0; border-top: 1px solid var(--border-color); text-align: center; }
         .footer-logo { font-family: var(--font-display); font-size: 2rem; color: var(--amarelo); font-weight: 900; letter-spacing: -1px; }
-
     </style>
 </head>
 <body>
 
     <div class="social-floating">
-        <a href="https://wa.me/5535984422957" target="_blank" class="btn-float">
-            <i data-lucide="message-circle"></i>
-        </a>
+        <a href="https://wa.me/5535984422957" target="_blank" class="btn-float"><i data-lucide="message-circle"></i></a>
     </div>
 
     <header>
         <div class="hero-bg"><div class="bg-slide slide1"></div><div class="bg-slide slide2"></div><div class="bg-slide slide3"></div></div>
         <div class="header-content">
-            
             <img src="logo.png" alt="Logo Mano a Mano" class="logo-img">
-
             <h1 class="hero-title">ESTILO • RESPEITO • TRADIÇÃO</h1>
-
             <div id="weatherWidget" class="weather-badge">
                 <i data-lucide="map-pin" class="weather-icon" style="width: 14px;"></i> ITAJUBÁ
                 <span style="color: #333;">|</span>
                 <i data-lucide="thermometer" class="weather-icon" style="width: 14px;"></i> <span id="tempValue">--</span>°C
             </div>
-            
             <div class="btn-group">
-                <a href="#richard" class="btn-primary" onclick="setBarbeiro('richard')">
-                    AGENDAR C/ RICHARD
-                </a>
-                <a href="#walisson" class="btn-primary" onclick="setBarbeiro('walisson')">
-                    AGENDAR C/ WALISSON
-                </a>
+                <a href="#richard" class="btn-primary" onclick="setBarbeiro('richard')">AGENDAR C/ RICHARD</a>
+                <a href="#walisson" class="btn-primary" onclick="setBarbeiro('walisson')">AGENDAR C/ WALISSON</a>
             </div>
-            
-            <div style="margin-top: 60px;">
-                <a href="#localizacao" class="btn-outline">ONDE ESTAMOS</a>
-            </div>
+            <div style="margin-top: 60px;"><a href="#localizacao" class="btn-outline">ONDE ESTAMOS</a></div>
         </div>
     </header>
 
@@ -271,7 +271,6 @@
                 <h2 class="section-title">NOSSOS <span style="color: var(--amarelo);">SERVIÇOS</span></h2>
                 <p class="section-desc">Tabela atualizada. Preço justo, qualidade premium.</p>
             </div>
-
             <div class="price-grid">
                 <div class="price-card"><h3>Corte Tradicional</h3><p>Máquina e tesoura</p><span class="price-value">R$ 20</span></div>
                 <div class="price-card"><h3>Corte Estilizado</h3><p>Fade, Navalhado e Freestyle</p><span class="price-value">R$ 25</span></div>
@@ -286,35 +285,46 @@
     <section id="agendamento" class="agendamento">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">AGENDE SEU <span style="color: var(--amarelo);">HORÁRIO</span></h2>
+                <h2 class="section-title">AGENDE O SEU <span style="color: var(--amarelo);">HORÁRIO</span></h2>
+                <p class="section-desc">Escolha o profissional e a melhor hora para si.</p>
             </div>
 
             <div id="successContainer">
                 <div class="success-icon"><i data-lucide="check-circle" width="60" height="60"></i></div>
-                <h2 style="font-size: 2rem; margin-bottom: 20px;">AGENDAMENTO CONFIRMADO!</h2>
-                <p>Seu horário está reservado. Clique abaixo para confirmar no WhatsApp:</p>
+                <h2>AGENDAMENTO CONFIRMADO!</h2>
+                <p>O seu horário está reservado. Clique abaixo para confirmar no WhatsApp:</p>
                 <a id="whatsappBtn" href="#" class="btn-zap" target="_blank">FINALIZAR NO WHATSAPP</a>
             </div>
 
             <div id="allWidgets" class="barber-grid">
                 
                 <div id="richard" class="barber-card" onmouseenter="setBarbeiro('richard')" ontouchstart="setBarbeiro('richard')">
+                    
+                    <span class="snake-top"></span>
+                    <span class="snake-right"></span>
+                    <span class="snake-bottom"></span>
+                    <span class="snake-left"></span>
+                    
                     <div class="barber-header"><img src="richard.jpg" class="barber-photo"><h3 class="barber-name">RICHARD</h3><span class="barber-role">BARBER PRO</span></div>
-                    <div style="min-height: 1000px; background-color: #000000;">
+                    <div class="iframe-container">
                         <div class="calendly-inline-widget" 
-                             data-url="https://calendly.com/juniorrichard703/agenda?hide_gdpr_banner=1&background_color=0a0a0a&text_color=ffffff&primary_color=FACC15" 
-                             style="min-width:320px;height:1000px;">
-                        </div>
+                             data-base-url="https://calendly.com/juniorrichard703/agenda?hide_gdpr_banner=1&primary_color=FACC15" 
+                             style="min-width:320px;height:1000px;"></div>
                     </div>
                 </div>
 
                 <div id="walisson" class="barber-card" onmouseenter="setBarbeiro('walisson')" ontouchstart="setBarbeiro('walisson')">
+                    
+                    <span class="snake-top"></span>
+                    <span class="snake-right"></span>
+                    <span class="snake-bottom"></span>
+                    <span class="snake-left"></span>
+
                     <div class="barber-header"><img src="wallison.jpg" class="barber-photo"><h3 class="barber-name">WALISSON</h3><span class="barber-role">BARBER PRO</span></div>
-                    <div style="min-height: 1000px; background-color: #000000;">
+                    <div class="iframe-container">
                         <div class="calendly-inline-widget" 
-                             data-url="https://calendly.com/walissonrodrigo545/agenda?hide_gdpr_banner=1&background_color=0a0a0a&text_color=ffffff&primary_color=FACC15" 
-                             style="min-width:320px;height:1000px;">
-                        </div>
+                             data-base-url="https://calendly.com/walissonrodrigo545/agenda?hide_gdpr_banner=1&primary_color=FACC15" 
+                             style="min-width:320px;height:1000px;"></div>
                     </div>
                 </div>
 
@@ -325,19 +335,12 @@
     <section id="localizacao" class="localizacao">
         <div class="container" style="text-align: center;">
             <h2 class="section-title" style="font-size: 2rem; margin-bottom: 40px;">ONDE <span style="color: var(--amarelo);">ESTAMOS</span></h2>
-            
             <div style="max-width: 900px; margin: 0 auto; height: 400px;" class="map-frame">
-                <iframe 
-                    src="https://maps.google.com/maps?q=R.+Jos%C3%A9+Souza+Rezende,+203+-+Rebourgeon,+Itajub%C3%A1+-+MG&t=&z=17&ie=UTF8&iwloc=&output=embed" 
-                    width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy">
-                </iframe>
+                <iframe src="https://maps.google.com/maps?q=R.+Jos%C3%A9+Souza+Rezende,+203+-+Rebourgeon,+Itajub%C3%A1+-+MG&t=&z=17&ie=UTF8&iwloc=&output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
             </div>
-            
             <div style="margin-top: 30px;">
                 <p style="font-size: 1.1rem; color: #fff;">R. José Souza Rezende, 203 - Rebourgeon, Itajubá - MG</p>
-                <a href="https://www.google.com/maps/search/?api=1&query=R.+Jos%C3%A9+Souza+Rezende,+203+-+Rebourgeon,+Itajub%C3%A1+-+MG" target="_blank" class="btn-outline" style="margin-top: 20px; display: inline-block;">
-                    TRAÇAR ROTA NO GPS
-                </a>
+                <a href="https://www.google.com/maps/search/?api=1&query=R.+Jos%C3%A9+Souza+Rezende,+203+-+Rebourgeon,+Itajub%C3%A1+-+MG" target="_blank" class="btn-outline" style="margin-top: 20px; display: inline-block;">TRAÇAR ROTA NO GPS</a>
             </div>
         </div>
     </section>
@@ -350,18 +353,33 @@
     </footer>
 
     <script>
-        // Inicializa Ícones
         lucide.createIcons();
-        
-        // Rastreamento de Barbeiro
         let barbeiroSelecionado = 'richard';
 
         function setBarbeiro(nome) {
             barbeiroSelecionado = nome;
-            console.log("Foco no barbeiro: " + nome);
         }
 
-        // API de Tempo (Itajubá)
+        // --- SCRIPT INTELIGENTE DE TEMA ---
+        function initCalendlyWidgets() {
+            const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const widgets = document.querySelectorAll('.calendly-inline-widget');
+            
+            widgets.forEach(widget => {
+                const baseUrl = widget.getAttribute('data-base-url');
+                let finalUrl = baseUrl;
+
+                if (prefersDark) {
+                    finalUrl += '&theme=dark&background_color=000000&text_color=ffffff';
+                } else {
+                    finalUrl += '&background_color=ffffff&text_color=1a1a1a';
+                }
+                widget.setAttribute('data-url', finalUrl);
+            });
+        }
+        initCalendlyWidgets();
+
+
         async function getWeather() {
             try {
                 const response = await fetch('https://api.open-meteo.com/v1/forecast?latitude=-22.4269&longitude=-45.4533&current=temperature_2m&timezone=America%2FSao_Paulo');
@@ -370,30 +388,23 @@
                     document.getElementById('tempValue').innerText = Math.round(data.current.temperature_2m);
                 }
             } catch (error) {
-                console.log("Erro ao carregar tempo:", error);
                 document.getElementById('weatherWidget').style.display = 'none';
             }
         }
         getWeather();
 
-        // Lógica do Calendly + WhatsApp
         window.addEventListener('message', function(e) {
             if (e.data.event && e.data.event === 'calendly.event_scheduled') {
-                // Esconde agendas e mostra confirmação
                 document.getElementById('allWidgets').style.display = 'none';
                 document.getElementById('successContainer').style.display = 'block';
                 document.getElementById('agendamento').scrollIntoView({behavior: 'smooth'});
                 
-                // Define número e mensagem baseado no barbeiro selecionado
                 let zapNumero = "5535984422957"; 
-                let zapMsg = "Fala Richard! Agendei um horário no site e quero confirmar.";
-                
+                let zapMsg = "Olá Richard! Agendei um horário no site e quero confirmar.";
                 if (barbeiroSelecionado === 'walisson') {
                     zapNumero = "5535984273273"; 
-                    zapMsg = "Fala Walisson! Agendei um horário no site e quero confirmar.";
+                    zapMsg = "Olá Walisson! Agendei um horário no site e quero confirmar.";
                 }
-                
-                // Atualiza o botão
                 const btnZap = document.getElementById('whatsappBtn');
                 if (btnZap) {
                     btnZap.href = "https://wa.me/" + zapNumero + "?text=" + encodeURIComponent(zapMsg);
