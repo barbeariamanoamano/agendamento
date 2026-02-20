@@ -28,7 +28,7 @@
             --font-display: 'Oswald', sans-serif;
             --font-body: 'Montserrat', sans-serif;
             
-            /* Variáveis para a Secção Clara */
+            /* Variáveis para a Secção Clara (Fixo) */
             --light-bg: #F8F9FA; 
             --light-card-bg: #ffffff;
             --light-text-primary: #1a1a1a;
@@ -95,13 +95,12 @@
 
 
         /* ==================================================================
-           --- SECÇÃO DE AGENDAMENTO ---
+           --- SECÇÃO DE AGENDAMENTO (BRANCO PADRÃO) ---
            ================================================================== */
         .agendamento { 
             padding: 100px 0; 
             background: var(--light-bg); 
             color: var(--light-text-primary);
-            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         .agendamento .section-title { color: var(--light-text-primary); }
@@ -110,75 +109,24 @@
         .barber-grid { display: grid; grid-template-columns: 1fr; gap: 40px; max-width: 1000px; margin: 0 auto; }
         @media(min-width: 768px) { .barber-grid { grid-template-columns: 1fr 1fr; } }
         
-        /* ==================================================================
-           --- OS QUADRADOS COM A "COBRINHA ELÉTRICA" ---
-           ================================================================== */
+        /* Card do Barbeiro */
         .barber-card { 
             background: var(--light-card-bg); 
+            border: 1px solid var(--light-border);
             border-radius: 12px; 
             overflow: hidden; 
             box-shadow: 0 10px 40px rgba(0,0,0,0.08); 
             transition: 0.4s; 
-            position: relative; /* Necessário para as linhas andarem aqui dentro */
-            border: none; /* Remove a borda antiga para dar lugar ao néon */
         }
-        
-        /* O Efeito Hover faz o cartão flutuar */
         .barber-card:hover { 
             transform: translateY(-8px); 
             box-shadow: 0 20px 60px rgba(0,0,0,0.12);
         }
-
-        /* As 4 linhas que formam a enguia elétrica */
-        .snake-top, .snake-right, .snake-bottom, .snake-left {
-            position: absolute;
-            background: var(--amarelo);
-            box-shadow: 0 0 10px var(--amarelo), 0 0 20px var(--amarelo); /* Brilho Néon */
-            z-index: 10;
-        }
-
-        /* Topo (Esquerda para Direita) */
-        .snake-top {
-            top: 0; left: -100%; width: 100%; height: 4px;
-            background: linear-gradient(90deg, transparent, var(--amarelo));
-            animation: moveTop 3s linear infinite;
-        }
-        @keyframes moveTop { 0% { left: -100%; } 50%, 100% { left: 100%; } }
-
-        /* Direita (Cima para Baixo) */
-        .snake-right {
-            top: -100%; right: 0; width: 4px; height: 100%;
-            background: linear-gradient(180deg, transparent, var(--amarelo));
-            animation: moveRight 3s linear infinite;
-            animation-delay: 0.75s; /* Entra em cena depois do topo */
-        }
-        @keyframes moveRight { 0% { top: -100%; } 50%, 100% { top: 100%; } }
-
-        /* Fundo (Direita para Esquerda) */
-        .snake-bottom {
-            bottom: 0; right: -100%; width: 100%; height: 4px;
-            background: linear-gradient(270deg, transparent, var(--amarelo));
-            animation: moveBottom 3s linear infinite;
-            animation-delay: 1.5s;
-        }
-        @keyframes moveBottom { 0% { right: -100%; } 50%, 100% { right: 100%; } }
-
-        /* Esquerda (Baixo para Cima) */
-        .snake-left {
-            bottom: -100%; left: 0; width: 4px; height: 100%;
-            background: linear-gradient(360deg, transparent, var(--amarelo));
-            animation: moveLeft 3s linear infinite;
-            animation-delay: 2.25s;
-        }
-        @keyframes moveLeft { 0% { bottom: -100%; } 50%, 100% { bottom: 100%; } }
-        /* ================================================================== */
-
-
+        
         .barber-header { 
             padding: 30px 20px; text-align: center; 
             background: var(--light-card-bg);
             border-bottom: 1px solid var(--light-border); 
-            position: relative; z-index: 2; /* Fica acima das linhas */
         }
         
         .barber-photo { 
@@ -192,14 +140,13 @@
         .barber-name { font-size: 1.8rem; color: var(--light-text-primary); font-weight: 700; }
         .barber-role { font-size: 0.9rem; color: var(--amarelo); font-weight: 600; letter-spacing: 1px; text-transform: uppercase; margin-top: 5px; display: block; }
         
-        /* Container do iframe para garantir fundo branco */
+        /* Container do iframe (Branco sólido) */
         .iframe-container {
             min-height: 1000px;
             background-color: #ffffff;
-            position: relative; z-index: 2; /* Fica acima das linhas */
         }
 
-        /* ECRÃ DE SUCESSO */
+        /* ECRÃ DE SUCESSO (Versão Clara Fixa) */
         #successContainer { 
             display: none; max-width: 600px; margin: 50px auto; 
             background: var(--light-card-bg); 
@@ -212,24 +159,6 @@
         #successContainer p { color: var(--light-text-secondary); }
         .success-icon { color: var(--amarelo); margin-bottom: 20px; }
         .btn-zap { display: block; width: 100%; max-width: 300px; margin: 30px auto 0; background: var(--verde-zap); color: #fff; padding: 20px; font-weight: 700; text-transform: uppercase; text-decoration: none; border-radius: 8px; animation: pulse 2s infinite; box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3); }
-
-        /* ==================================================================
-           --- INTEGRAÇÃO DE DARK MODE ---
-           ================================================================== */
-        @media (prefers-color-scheme: dark) {
-            .agendamento { background: var(--bg-black); color: var(--branco); }
-            .agendamento .section-title { color: var(--branco); }
-            .agendamento p.section-desc { color: var(--cinza-texto); }
-
-            .barber-card { background: var(--bg-dark); box-shadow: none; }
-            .barber-header { background: linear-gradient(to bottom, var(--bg-dark), var(--bg-black)); border-bottom-color: var(--border-color); }
-            .barber-name { color: var(--branco); }
-            .iframe-container { background-color: #000000 !important; }
-
-             #successContainer { background: var(--bg-dark); border: 1px solid var(--amarelo); box-shadow: 0 0 50px rgba(250, 204, 21, 0.1); }
-             #successContainer h2 { color: var(--branco); }
-             #successContainer p { color: var(--cinza-texto); }
-        }
 
         /* --- LOCALIZAÇÃO --- */
         .localizacao { padding: 100px 0; background: var(--bg-dark); border-top: 1px solid var(--border-color); }
@@ -299,31 +228,19 @@
             <div id="allWidgets" class="barber-grid">
                 
                 <div id="richard" class="barber-card" onmouseenter="setBarbeiro('richard')" ontouchstart="setBarbeiro('richard')">
-                    
-                    <span class="snake-top"></span>
-                    <span class="snake-right"></span>
-                    <span class="snake-bottom"></span>
-                    <span class="snake-left"></span>
-                    
                     <div class="barber-header"><img src="richard.jpg" class="barber-photo"><h3 class="barber-name">RICHARD</h3><span class="barber-role">BARBER PRO</span></div>
                     <div class="iframe-container">
                         <div class="calendly-inline-widget" 
-                             data-base-url="https://calendly.com/juniorrichard703/agenda?hide_gdpr_banner=1&primary_color=FACC15" 
+                             data-url="https://calendly.com/juniorrichard703/agenda?hide_gdpr_banner=1&primary_color=FACC15&background_color=ffffff&text_color=1a1a1a" 
                              style="min-width:320px;height:1000px;"></div>
                     </div>
                 </div>
 
                 <div id="walisson" class="barber-card" onmouseenter="setBarbeiro('walisson')" ontouchstart="setBarbeiro('walisson')">
-                    
-                    <span class="snake-top"></span>
-                    <span class="snake-right"></span>
-                    <span class="snake-bottom"></span>
-                    <span class="snake-left"></span>
-
                     <div class="barber-header"><img src="wallison.jpg" class="barber-photo"><h3 class="barber-name">WALISSON</h3><span class="barber-role">BARBER PRO</span></div>
                     <div class="iframe-container">
                         <div class="calendly-inline-widget" 
-                             data-base-url="https://calendly.com/walissonrodrigo545/agenda?hide_gdpr_banner=1&primary_color=FACC15" 
+                             data-url="https://calendly.com/walissonrodrigo545/agenda?hide_gdpr_banner=1&primary_color=FACC15&background_color=ffffff&text_color=1a1a1a" 
                              style="min-width:320px;height:1000px;"></div>
                     </div>
                 </div>
@@ -359,26 +276,6 @@
         function setBarbeiro(nome) {
             barbeiroSelecionado = nome;
         }
-
-        // --- SCRIPT INTELIGENTE DE TEMA ---
-        function initCalendlyWidgets() {
-            const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-            const widgets = document.querySelectorAll('.calendly-inline-widget');
-            
-            widgets.forEach(widget => {
-                const baseUrl = widget.getAttribute('data-base-url');
-                let finalUrl = baseUrl;
-
-                if (prefersDark) {
-                    finalUrl += '&theme=dark&background_color=000000&text_color=ffffff';
-                } else {
-                    finalUrl += '&background_color=ffffff&text_color=1a1a1a';
-                }
-                widget.setAttribute('data-url', finalUrl);
-            });
-        }
-        initCalendlyWidgets();
-
 
         async function getWeather() {
             try {
