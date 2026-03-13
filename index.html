@@ -169,20 +169,6 @@
             box-shadow: 0 4px 15px rgba(250, 204, 21, 0.4);
         }
 
-        /* ECRÃ DE SUCESSO (Versão Clara Fixa) */
-        #successContainer { 
-            display: none; max-width: 600px; margin: 50px auto; 
-            background: var(--light-card-bg); 
-            border: 2px solid var(--amarelo);
-            border-radius: 12px;
-            padding: 60px 20px; text-align: center; 
-            box-shadow: 0 10px 40px rgba(250, 204, 21, 0.15); 
-        }
-        #successContainer h2 { color: var(--light-text-primary); }
-        #successContainer p { color: var(--light-text-secondary); }
-        .success-icon { color: var(--amarelo); margin-bottom: 20px; }
-        .btn-zap { display: block; width: 100%; max-width: 300px; margin: 30px auto 0; background: var(--verde-zap); color: #fff; padding: 20px; font-weight: 700; text-transform: uppercase; text-decoration: none; border-radius: 8px; animation: pulse 2s infinite; box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3); }
-
         /* --- LOCALIZAÇÃO --- */
         .localizacao { padding: 100px 0; background: var(--bg-dark); border-top: 1px solid var(--border-color); }
         .map-frame { border: 1px solid var(--border-color); filter: grayscale(100%) invert(100%) contrast(0.9); transition: 0.5s; }
@@ -241,30 +227,13 @@
                 <p class="section-desc">Escolha o profissional e a melhor hora para si.</p>
             </div>
 
-            <!-- ECRÃ INTERMEDIÁRIO (CAPTURA DA ATENÇÃO ANTES DO CALENDLY) -->
-            <div id="successContainer" style="display: none; max-width: 600px; margin: 50px auto; background: var(--light-card-bg); border: 2px solid var(--amarelo); border-radius: 12px; padding: 40px 20px; text-align: center; box-shadow: 0 10px 40px rgba(250, 204, 21, 0.15);">
-                <div class="success-icon"><i data-lucide="alert-circle" width="60" height="60" style="color: var(--amarelo);"></i></div>
-                <h2 style="color: var(--light-text-primary); margin-bottom: 15px;">MUITO IMPORTANTE!</h2>
-                <p style="color: var(--light-text-secondary); font-size: 1.1rem; margin-bottom: 25px;">
-                    Na próxima página, você vai escolher o horário oficial no nosso sistema.<br><br>
-                    <strong>APÓS MARCAR LÁ</strong>, não esqueça de voltar aqui ou clicar no botão abaixo para mandar a mensagem no nosso <strong>WhatsApp</strong> validando a vaga.
-                </p>
-                
-                <a id="btnIrParaCalendly" href="#" class="btn-calendly" style="margin-bottom: 20px;" target="_blank" onclick="mostrarBotaoZap()">IR PARA A AGENDA</a>
-                
-                <div id="divZapEscondida" style="display: none; margin-top: 30px; padding-top: 20px; border-top: 1px dashed var(--light-border);">
-                    <p style="color: var(--light-text-secondary); font-size: 0.9rem;">Já selecionou seu horário na outra tela?</p>
-                    <a id="whatsappBtn" href="#" class="btn-zap" target="_blank" style="margin-top: 10px;">FINALIZAR NO WHATSAPP</a>
-                </div>
-            </div>
-
-            <div id="allWidgets" class="barber-grid">
+            <div class="barber-grid">
                 
                 <div id="richard" class="barber-card">
                     <div class="barber-header"><img src="richard.jpg" class="barber-photo"><h3 class="barber-name">RICHARD</h3><span class="barber-role">BARBER PRO</span></div>
                     <div class="booking-container">
                         <p style="color: var(--light-text-secondary); margin-bottom: 20px; font-weight: 500;">Escolha o melhor horário na agenda do Richard.</p>
-                        <button class="btn-calendly" onclick="ativarPreCalendly('richard', 'https://calendly.com/juniorrichard703/agenda-richard-clone')">VER HORÁRIOS</button>
+                        <a href="https://calendly.com/juniorrichard703/agenda-richard-clone" class="btn-calendly" target="_blank">VER HORÁRIOS</a>
                     </div>
                 </div>
 
@@ -272,7 +241,7 @@
                     <div class="barber-header"><img src="wallison.jpg" class="barber-photo"><h3 class="barber-name">WALISSON</h3><span class="barber-role">BARBER PRO</span></div>
                     <div class="booking-container">
                         <p style="color: var(--light-text-secondary); margin-bottom: 20px; font-weight: 500;">Escolha o melhor horário na agenda do Walisson.</p>
-                        <button class="btn-calendly" onclick="ativarPreCalendly('walisson', 'https://calendly.com/walissonrodrigo545/agenda')">VER HORÁRIOS</button>
+                        <a href="https://calendly.com/walissonrodrigo545/agenda" class="btn-calendly" target="_blank">VER HORÁRIOS</a>
                     </div>
                 </div>
 
@@ -302,46 +271,6 @@
 
     <script>
         lucide.createIcons();
-        let barbeiroSelecionado = 'richard';
-
-        function setBarbeiro(nome) {
-            barbeiroSelecionado = nome;
-        }
-
-        // 1. Mostra o Aviso e prepara o Link do Calendly
-        function ativarPreCalendly(nome, url) {
-            setBarbeiro(nome);
-            
-            // Esconde lista de barbeiros
-            document.getElementById('allWidgets').style.display = 'none';
-            // Mostra o quadro de Aviso Importante
-            document.getElementById('successContainer').style.display = 'block';
-            // Esconde o botão do Zap por enquanto
-            document.getElementById('divZapEscondida').style.display = 'none';
-            
-            // Rola suave
-            document.getElementById('agendamento').scrollIntoView({behavior: 'smooth'});
-
-            // Coloca o link do Calendly do barbeiro correto no botão de prosseguir
-            document.getElementById('btnIrParaCalendly').href = url;
-
-            // Prepara a msg do Zap (para quando ele quiser revelar o botão)
-            let zapNumero = "5535984422957"; 
-            let zapMsg = "Olá Richard! Finalizei o agendamento no site e estou confirmando minha ida com você!";
-            if (nome === 'walisson') {
-                zapNumero = "5535984273273"; 
-                zapMsg = "Olá Walisson! Finalizei o agendamento no site e estou confirmando minha ida com você!";
-            }
-            document.getElementById('whatsappBtn').href = "https://wa.me/" + zapNumero + "?text=" + encodeURIComponent(zapMsg);
-        }
-
-        // 2. Quando o cliente clica para ir ao Calendly, finalmente liberamos o botão do WhatsApp nesta tela para o regresso.
-        function mostrarBotaoZap() {
-            setTimeout(() => {
-                document.getElementById('btnIrParaCalendly').style.display = 'none'; // Some o botão do Calendly, pois ele já foi para a aba
-                document.getElementById('divZapEscondida').style.display = 'block';   // Revela o ZAP
-            }, 1000); // 1 segundo de espera para não cortar o click "target_blank" acidentalmente
-        }
 
         async function getWeather() {
             try {
