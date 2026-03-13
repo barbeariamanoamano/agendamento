@@ -13,7 +13,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
-    <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
 
     <script src="https://unpkg.com/lucide@latest"></script>
 
@@ -155,9 +154,9 @@
             font-family: var(--font-display);
             font-weight: 700;
             text-transform: uppercase;
+            text-decoration: none;
             border: 1px solid var(--amarelo);
             border-radius: 8px;
-            cursor: pointer;
             transition: 0.3s;
             font-size: 1.1rem;
             width: 100%;
@@ -255,7 +254,7 @@
                     <div class="barber-header"><img src="richard.jpg" class="barber-photo"><h3 class="barber-name">RICHARD</h3><span class="barber-role">BARBER PRO</span></div>
                     <div class="booking-container">
                         <p style="color: var(--light-text-secondary); margin-bottom: 20px; font-weight: 500;">Escolha o melhor horário na agenda do Richard.</p>
-                        <button class="btn-calendly" onclick="abrirCalendly('richard', 'https://calendly.com/juniorrichard703/agenda-richard-clone?hide_gdpr_banner=1')">VER HORÁRIOS</button>
+                        <a href="https://calendly.com/juniorrichard703/agenda-richard-clone" class="btn-calendly" target="_blank" onclick="prepararSucesso('richard')">VER HORÁRIOS</a>
                     </div>
                 </div>
 
@@ -263,7 +262,7 @@
                     <div class="barber-header"><img src="wallison.jpg" class="barber-photo"><h3 class="barber-name">WALISSON</h3><span class="barber-role">BARBER PRO</span></div>
                     <div class="booking-container">
                         <p style="color: var(--light-text-secondary); margin-bottom: 20px; font-weight: 500;">Escolha o melhor horário na agenda do Walisson.</p>
-                        <button class="btn-calendly" onclick="abrirCalendly('walisson', 'https://calendly.com/walissonrodrigo545/agenda?hide_gdpr_banner=1')">VER HORÁRIOS</button>
+                        <a href="https://calendly.com/walissonrodrigo545/agenda" class="btn-calendly" target="_blank" onclick="prepararSucesso('walisson')">VER HORÁRIOS</a>
                     </div>
                 </div>
 
@@ -299,10 +298,30 @@
             barbeiroSelecionado = nome;
         }
 
-        function abrirCalendly(nome, url) {
+        // Simula o callback mostrando a tela de sucesso quando o usuário clica e volta para a página
+        function prepararSucesso(nome) {
             setBarbeiro(nome);
-            Calendly.initPopupWidget({url: url});
-            return false;
+            
+            // Cria um atraso de 2 segundos para dar tempo ao usuário de ir para a outra aba
+            // Quando ele voltar para esta janela, já verá a tela de confirmação verde
+            setTimeout(() => {
+                document.getElementById('allWidgets').style.display = 'none';
+                document.getElementById('successContainer').style.display = 'block';
+                
+                // Rola suave para cima para o cliente focar no botão do WP
+                document.getElementById('agendamento').scrollIntoView({behavior: 'smooth'});
+
+                let zapNumero = "5535984422957"; 
+                let zapMsg = "Olá Richard! Finalizei o agendamento lá no botão e estou te mandando mensagem para confirmar minha vez.";
+                if (barbeiroSelecionado === 'walisson') {
+                    zapNumero = "5535984273273"; 
+                    zapMsg = "Olá Walisson! Finalizei o agendamento lá no botão e estou te mandando mensagem para confirmar minha vez.";
+                }
+                const btnZap = document.getElementById('whatsappBtn');
+                if (btnZap) {
+                    btnZap.href = "https://wa.me/" + zapNumero + "?text=" + encodeURIComponent(zapMsg);
+                }
+            }, 2000);
         }
 
         async function getWeather() {
@@ -318,28 +337,6 @@
         }
         getWeather();
 
-        window.addEventListener('message', function(e) {
-            if (e.data.event && e.data.event === 'calendly.event_scheduled') {
-                if (window.Calendly) {
-                    Calendly.closePopupWidget();
-                }
-                document.getElementById('allWidgets').style.display = 'none';
-                document.getElementById('successContainer').style.display = 'block';
-                document.getElementById('agendamento').scrollIntoView({behavior: 'smooth'});
-                
-                let zapNumero = "5535984422957"; 
-                let zapMsg = "Olá Richard! Agendei um horário no site e quero confirmar.";
-                if (barbeiroSelecionado === 'walisson') {
-                    zapNumero = "5535984273273"; 
-                    zapMsg = "Olá Walisson! Agendei um horário no site e quero confirmar.";
-                }
-                const btnZap = document.getElementById('whatsappBtn');
-                if (btnZap) {
-                    btnZap.href = "https://wa.me/" + zapNumero + "?text=" + encodeURIComponent(zapMsg);
-                }
-            }
-        });
     </script>
-    <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
 </body>
 </html>
