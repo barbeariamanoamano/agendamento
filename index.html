@@ -298,30 +298,42 @@
             barbeiroSelecionado = nome;
         }
 
-        // Simula o callback mostrando a tela de sucesso quando o usuário clica e volta para a página
+        // Função para simular o Sucesso e chamar o WP quando o cliente abre o Calendly e volta ao site
         function prepararSucesso(nome) {
             setBarbeiro(nome);
             
-            // Cria um atraso de 2 segundos para dar tempo ao usuário de ir para a outra aba
-            // Quando ele voltar para esta janela, já verá a tela de confirmação verde
+            // Coloca um gatilho de detecção. 
+            // Quando a pessoa sair para a nova aba e voltar para esta janela, dispara o Sucesso!
+            window.addEventListener('focus', exibirSucessoAposTempo);
+            
+            // Por segurança, se a pessoa voltar muito rápido, ou se não sair da janela, também chamamos depois de 4 segundos
             setTimeout(() => {
-                document.getElementById('allWidgets').style.display = 'none';
-                document.getElementById('successContainer').style.display = 'block';
-                
-                // Rola suave para cima para o cliente focar no botão do WP
-                document.getElementById('agendamento').scrollIntoView({behavior: 'smooth'});
+                exibirSucessoAposTempo();
+            }, 4000);
+        }
 
-                let zapNumero = "5535984422957"; 
-                let zapMsg = "Olá Richard! Finalizei o agendamento lá no botão e estou te mandando mensagem para confirmar minha vez.";
-                if (barbeiroSelecionado === 'walisson') {
-                    zapNumero = "5535984273273"; 
-                    zapMsg = "Olá Walisson! Finalizei o agendamento lá no botão e estou te mandando mensagem para confirmar minha vez.";
-                }
-                const btnZap = document.getElementById('whatsappBtn');
-                if (btnZap) {
-                    btnZap.href = "https://wa.me/" + zapNumero + "?text=" + encodeURIComponent(zapMsg);
-                }
-            }, 2000);
+        function exibirSucessoAposTempo() {
+            // Removemos o EventListener para não ficar executando várias vezes
+            window.removeEventListener('focus', exibirSucessoAposTempo);
+
+            // Esconde os cartões do barbeiro e mostra a tela de sucesso
+            document.getElementById('allWidgets').style.display = 'none';
+            document.getElementById('successContainer').style.display = 'block';
+            
+            // Desliza a tela para cima com foco no botão verde do Whatsapp
+            document.getElementById('agendamento').scrollIntoView({behavior: 'smooth'});
+
+            let zapNumero = "5535984422957"; 
+            let zapMsg = "Olá Richard! Finalizei o agendamento lá no botão e estou confirmando minha ida com você!";
+            if (barbeiroSelecionado === 'walisson') {
+                zapNumero = "5535984273273"; 
+                zapMsg = "Olá Walisson! Finalizei o agendamento lá no botão e estou confirmando minha ida com você!";
+            }
+            
+            const btnZap = document.getElementById('whatsappBtn');
+            if (btnZap) {
+                btnZap.href = "https://wa.me/" + zapNumero + "?text=" + encodeURIComponent(zapMsg);
+            }
         }
 
         async function getWeather() {
