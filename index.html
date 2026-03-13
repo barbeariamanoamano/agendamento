@@ -241,11 +241,21 @@
                 <p class="section-desc">Escolha o profissional e a melhor hora para si.</p>
             </div>
 
-            <div id="successContainer">
-                <div class="success-icon"><i data-lucide="check-circle" width="60" height="60"></i></div>
-                <h2>AGENDAMENTO CONFIRMADO!</h2>
-                <p>O seu horário está reservado. Clique abaixo para confirmar no WhatsApp:</p>
-                <a id="whatsappBtn" href="#" class="btn-zap" target="_blank">FINALIZAR NO WHATSAPP</a>
+            <!-- ECRÃ INTERMEDIÁRIO (CAPTURA DA ATENÇÃO ANTES DO CALENDLY) -->
+            <div id="successContainer" style="display: none; max-width: 600px; margin: 50px auto; background: var(--light-card-bg); border: 2px solid var(--amarelo); border-radius: 12px; padding: 40px 20px; text-align: center; box-shadow: 0 10px 40px rgba(250, 204, 21, 0.15);">
+                <div class="success-icon"><i data-lucide="alert-circle" width="60" height="60" style="color: var(--amarelo);"></i></div>
+                <h2 style="color: var(--light-text-primary); margin-bottom: 15px;">MUITO IMPORTANTE!</h2>
+                <p style="color: var(--light-text-secondary); font-size: 1.1rem; margin-bottom: 25px;">
+                    Na próxima página, você vai escolher o horário oficial no nosso sistema.<br><br>
+                    <strong>APÓS MARCAR LÁ</strong>, não esqueça de voltar aqui ou clicar no botão abaixo para mandar a mensagem no nosso <strong>WhatsApp</strong> validando a vaga.
+                </p>
+                
+                <a id="btnIrParaCalendly" href="#" class="btn-calendly" style="margin-bottom: 20px;" target="_blank" onclick="mostrarBotaoZap()">IR PARA A AGENDA</a>
+                
+                <div id="divZapEscondida" style="display: none; margin-top: 30px; padding-top: 20px; border-top: 1px dashed var(--light-border);">
+                    <p style="color: var(--light-text-secondary); font-size: 0.9rem;">Já selecionou seu horário na outra tela?</p>
+                    <a id="whatsappBtn" href="#" class="btn-zap" target="_blank" style="margin-top: 10px;">FINALIZAR NO WHATSAPP</a>
+                </div>
             </div>
 
             <div id="allWidgets" class="barber-grid">
@@ -254,7 +264,7 @@
                     <div class="barber-header"><img src="richard.jpg" class="barber-photo"><h3 class="barber-name">RICHARD</h3><span class="barber-role">BARBER PRO</span></div>
                     <div class="booking-container">
                         <p style="color: var(--light-text-secondary); margin-bottom: 20px; font-weight: 500;">Escolha o melhor horário na agenda do Richard.</p>
-                        <a href="https://calendly.com/juniorrichard703/agenda-richard-clone" class="btn-calendly" target="_blank" onclick="prepararSucesso('richard')">VER HORÁRIOS</a>
+                        <button class="btn-calendly" onclick="ativarPreCalendly('richard', 'https://calendly.com/juniorrichard703/agenda-richard-clone')">VER HORÁRIOS</button>
                     </div>
                 </div>
 
@@ -262,7 +272,7 @@
                     <div class="barber-header"><img src="wallison.jpg" class="barber-photo"><h3 class="barber-name">WALISSON</h3><span class="barber-role">BARBER PRO</span></div>
                     <div class="booking-container">
                         <p style="color: var(--light-text-secondary); margin-bottom: 20px; font-weight: 500;">Escolha o melhor horário na agenda do Walisson.</p>
-                        <a href="https://calendly.com/walissonrodrigo545/agenda" class="btn-calendly" target="_blank" onclick="prepararSucesso('walisson')">VER HORÁRIOS</a>
+                        <button class="btn-calendly" onclick="ativarPreCalendly('walisson', 'https://calendly.com/walissonrodrigo545/agenda')">VER HORÁRIOS</button>
                     </div>
                 </div>
 
@@ -298,42 +308,39 @@
             barbeiroSelecionado = nome;
         }
 
-        // Função para simular o Sucesso e chamar o WP quando o cliente abre o Calendly e volta ao site
-        function prepararSucesso(nome) {
+        // 1. Mostra o Aviso e prepara o Link do Calendly
+        function ativarPreCalendly(nome, url) {
             setBarbeiro(nome);
             
-            // Coloca um gatilho de detecção. 
-            // Quando a pessoa sair para a nova aba e voltar para esta janela, dispara o Sucesso!
-            window.addEventListener('focus', exibirSucessoAposTempo);
-            
-            // Por segurança, se a pessoa voltar muito rápido, ou se não sair da janela, também chamamos depois de 4 segundos
-            setTimeout(() => {
-                exibirSucessoAposTempo();
-            }, 4000);
-        }
-
-        function exibirSucessoAposTempo() {
-            // Removemos o EventListener para não ficar executando várias vezes
-            window.removeEventListener('focus', exibirSucessoAposTempo);
-
-            // Esconde os cartões do barbeiro e mostra a tela de sucesso
+            // Esconde lista de barbeiros
             document.getElementById('allWidgets').style.display = 'none';
+            // Mostra o quadro de Aviso Importante
             document.getElementById('successContainer').style.display = 'block';
+            // Esconde o botão do Zap por enquanto
+            document.getElementById('divZapEscondida').style.display = 'none';
             
-            // Desliza a tela para cima com foco no botão verde do Whatsapp
+            // Rola suave
             document.getElementById('agendamento').scrollIntoView({behavior: 'smooth'});
 
+            // Coloca o link do Calendly do barbeiro correto no botão de prosseguir
+            document.getElementById('btnIrParaCalendly').href = url;
+
+            // Prepara a msg do Zap (para quando ele quiser revelar o botão)
             let zapNumero = "5535984422957"; 
-            let zapMsg = "Olá Richard! Finalizei o agendamento lá no botão e estou confirmando minha ida com você!";
-            if (barbeiroSelecionado === 'walisson') {
+            let zapMsg = "Olá Richard! Finalizei o agendamento no site e estou confirmando minha ida com você!";
+            if (nome === 'walisson') {
                 zapNumero = "5535984273273"; 
-                zapMsg = "Olá Walisson! Finalizei o agendamento lá no botão e estou confirmando minha ida com você!";
+                zapMsg = "Olá Walisson! Finalizei o agendamento no site e estou confirmando minha ida com você!";
             }
-            
-            const btnZap = document.getElementById('whatsappBtn');
-            if (btnZap) {
-                btnZap.href = "https://wa.me/" + zapNumero + "?text=" + encodeURIComponent(zapMsg);
-            }
+            document.getElementById('whatsappBtn').href = "https://wa.me/" + zapNumero + "?text=" + encodeURIComponent(zapMsg);
+        }
+
+        // 2. Quando o cliente clica para ir ao Calendly, finalmente liberamos o botão do WhatsApp nesta tela para o regresso.
+        function mostrarBotaoZap() {
+            setTimeout(() => {
+                document.getElementById('btnIrParaCalendly').style.display = 'none'; // Some o botão do Calendly, pois ele já foi para a aba
+                document.getElementById('divZapEscondida').style.display = 'block';   // Revela o ZAP
+            }, 1000); // 1 segundo de espera para não cortar o click "target_blank" acidentalmente
         }
 
         async function getWeather() {
